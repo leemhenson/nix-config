@@ -1,0 +1,324 @@
+{ pkgs, ... }:
+{
+  users.users.leemhenson = {
+    name = "leemhenson";
+    home = "/Users/leemhenson";
+  };
+
+  # Make sure the nix daemon always runs
+  services.nix-daemon.enable = true;
+
+  programs.gnupg.agent.enable = true;
+  programs.zsh.enable = true;
+
+  homebrew = {
+    enable = true;
+
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+    };
+
+    # updates homebrew packages on activation,
+    # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
+
+    casks = [
+        "discord"
+        "warp"
+    ];
+  };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.leemhenson = { pkgs, ... }: {
+    home.stateVersion = "22.05";
+
+    xdg.configFile."bat/config".source = ../../dotfiles/bat/config;
+    xdg.configFile."vscode/wrapper/vscode".source = ../../dotfiles/vscode/wrapper/vscode;
+    xdg.configFile."vscode-insiders/wrapper/code".source = ../../dotfiles/vscode-insiders/wrapper/code;
+
+    home.packages = with pkgs; [
+      bash
+      bat
+      cmake
+      coreutils
+      curl
+      fd
+      gawk
+      gitAndTools.diff-so-fancy
+      httpie
+      jq
+      openssh
+      openssl
+      pgcli
+      readline
+      ripgrep
+      tldr
+      wget
+    ];
+
+    programs.direnv = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+    };
+
+    programs.fzf = {
+      defaultOptions = [ "-e" "--height 25%" "--reverse" ];
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+    };
+
+
+    programs.git = {
+      aliases = {
+        tree = "log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order";
+      };
+      enable = true;
+      extraConfig = {
+        apply.whitespace = "nowarn";
+
+        color = {
+          branch = "auto";
+          diff = "auto";
+          interactive = "auto";
+          status = "auto";
+          ui = true;
+
+          diff-highlight = {
+            oldNormal = "red bold";
+            oldHighlight = "red bold 52";
+            newNormal = "green bold";
+            newHighlight = "green bold 22";
+          };
+        };
+
+        core = {
+          editor = "$HOME/.config/vscode-insiders/wrapper/code --wait";
+          excludesfile = "$HOME/.config/git/ignore";
+        };
+
+        diff.tool = "Kaleidoscope";
+
+        difftool = {
+          prompt = false;
+
+          Kaleidoscope.cmd = "ksdiff --partial-changeset --relative-path \\\"$MERGED\\\" -- \\\"$LOCAL\\\" \\\"$REMOTE\\\";";
+        };
+
+        fetch.prune = true;
+        help.autocorrect = 1;
+
+        merge = {
+          renameLimit = 1000000;
+          tool = "vscode";
+        };
+
+        mergetool = {
+          keepBackup = false;
+
+          Kaleidoscope = {
+            cmd = "ksdiff --merge --output \\\"$MERGED\\\" --base \\\"$BASE\\\" -- \\\"$LOCAL\\\" --snapshot \\\"$REMOTE\\\" --snapshot";
+            trustExitCode = true;
+          };
+
+          vscode = {
+            cmd = "$HOME/.config/vscode-insiders/wrapper/code --wait $MERGED";
+          };
+        };
+
+        pager = {
+          diff = "diff-so-fancy | less --tabs=2 -RFX";
+          show = "diff-so-fancy | less --tabs=4 -RFX";
+        };
+
+        pull.rebase = true;
+        push.default = "current";
+      };
+
+      ignores = [
+        "*~"
+        ''\#*\#''
+        ''\.#*''
+        ".DS_Store"
+        "/.dir-locals.el"
+        "/.envrc"
+        "/.vscode"
+        "/npm-debug.log*"
+        "/tags"
+        "/tags.lock"
+        "/tags.temp"
+        "/vendor"
+        "/yarn-error.log"
+      ];
+      signing = {
+        key = "B1EA4611F4564B0C487DF4B44CC045383A6DCF55";
+        signByDefault = true;
+      };
+      userEmail = "lee.m.henson@gmail.com";
+      userName = "Lee Henson";
+    };
+
+    programs.htop.enable = true;
+
+    programs.kitty = {
+      enable = true;
+    };
+
+    programs.man.enable = true;
+
+    programs.neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+      withNodeJs = true;
+
+      coc = {
+        enable = true;
+
+        # this is only here because of: https://github.com/nix-community/home-manager/issues/2966#issuecomment-1133671482
+        package = pkgs.vimUtils.buildVimPluginFrom2Nix {
+          pname = "coc.nvim";
+          version = "2022-05-21";
+          src = pkgs.fetchFromGitHub {
+            owner = "neoclide";
+            repo = "coc.nvim";
+            rev = "791c9f673b882768486450e73d8bda10e391401d";
+            sha256 = "sha256-MobgwhFQ1Ld7pFknsurSFAsN5v+vGbEFojTAYD/kI9c=";
+          };
+          meta.homepage = "https://github.com/neoclide/coc.nvim/";
+       };
+      };
+    };
+
+    programs.ssh = {
+      enable = true;
+      matchBlocks = {
+        "github.com" = {
+          identityFile = "$HOME/.ssh/github";
+        };
+      };
+    };
+
+    programs.zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      enableSyntaxHighlighting = true;
+
+      history = {
+        expireDuplicatesFirst = true;
+        extended = true;
+        path = "$HOME/Documents/zsh/.histfile";
+        save = 100000;
+        size = 100000;
+      };
+
+      initExtra = ''
+        KEYTIMEOUT=1
+
+        # Do not require a leading '.' in a filename to be matched explicitly
+        setopt GLOBDOTS
+
+        # When searching for history entries in the line editor, do not display
+        # duplicates of a line previously found, even if the duplicates are not contiguous.
+        setopt HIST_FIND_NO_DUPS
+
+        # If a new command line being added to the history list duplicates an older one,
+        # the older command is removed from the list (even if it is not the previous event).
+        setopt HIST_IGNORE_ALL_DUPS
+
+        # Remove superfluous blanks from each command line being added to the history list
+        setopt HIST_REDUCE_BLANKS
+
+        # When writing out the history file, older commands that duplicate newer ones are omitted.
+        setopt HIST_SAVE_NO_DUPS
+
+        # immediately appends new commands to the histfile
+        setopt INC_APPEND_HISTORY
+
+        # Shaddapayourface
+        unsetopt BEEP
+
+        # clashes with INC_APPEND_HISTORY
+        unsetopt SHARE_HISTORY
+
+        # This speeds up pasting w/ autosuggest
+        # https://github.com/zsh-users/zsh-autosuggestions/issues/238
+
+        pasteinit() {
+          OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
+          zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+        }
+
+        pastefinish() {
+          zle -N self-insert $OLD_SELF_INSERT
+        }
+
+        zstyle :bracketed-paste-magic paste-init pasteinit
+        zstyle :bracketed-paste-magic paste-finish pastefinish
+      '';
+
+      oh-my-zsh = {
+        enable = true;
+
+        extraConfig = ''
+          # This stops zsh-vi-mode steamrolling over fzf keybindings
+          ZVM_INIT_MODE=sourcing
+        '';
+
+        plugins = [ "1password" "colored-man-pages" "git" "httpie" "ripgrep" "z" ];
+        theme = "flazz";
+      };
+
+      plugins = [
+        {
+          file = "alias-tips.plugin.zsh";
+          name = "alias-tips";
+          src = pkgs.fetchFromGitHub {
+            owner = "djui";
+            repo = "alias-tips";
+            rev = "cd13ef223c4f310d774cdf8cb0435474cc2bcbbe";
+            sha256 = "ffD0iHf9WVuE6QzZCkuDgIWj+BY/BRxtYNMi8osJohI=";
+          };
+        }
+        {
+          file = "nix-shell.plugin.zsh";
+          name = "zsh-nix-shell";
+          src = pkgs.fetchFromGitHub {
+            owner = "chisui";
+            repo = "zsh-nix-shell";
+            rev = "v0.5.0";
+            sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
+          };
+        }
+        {
+          file = "zsh-vi-mode.plugin.zsh";
+          name = "zsh-vi-mode";
+          src = pkgs.fetchFromGitHub {
+            owner = "jeffreytse";
+            repo = "zsh-vi-mode";
+            rev = "v0.8.5";
+            sha256 = "EOYqHh0rcgoi26eopm6FTl81ehak5kXMmzNcnJDH8/E=";
+          };
+        }
+      ];
+
+      sessionVariables = {
+        BAT_PAGER = "";
+        CLICOLOR = "true";
+        NPM_CONFIG_USERCONFIG = "$HOME/Documents/dotfiles/npmrc";
+        PATH = "$HOME/.config/vscode/wrapper:$HOME/.config/vscode-insiders/wrapper:$PATH";
+      };
+
+      shellAliases = {
+        awk = "gawk";
+        gcnv = "git commit --no-verify -m ";
+        gt = "git tree";
+        j = "z";
+        ls = "ls -alh --color=auto";
+      };
+    };
+  };
+}
