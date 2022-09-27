@@ -8,6 +8,8 @@
   # Make sure the nix daemon always runs
   services.nix-daemon.enable = true;
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   programs.gnupg.agent.enable = true;
   programs.zsh.enable = true;
 
