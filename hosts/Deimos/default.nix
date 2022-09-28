@@ -1,4 +1,12 @@
 { pkgs, ... }:
+
+let
+  mkLua = lua: ''
+    lua << EOF
+      ${lua}
+    EOF
+  '';
+in
 {
   users.users.leemhenson = {
     name = "leemhenson";
@@ -21,9 +29,6 @@
       upgrade = true;
     };
 
-    # updates homebrew packages on activation,
-    # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
-
     casks = [
         "discord"
         "warp"
@@ -35,9 +40,15 @@
   home-manager.users.leemhenson = { pkgs, ... }: {
     home.stateVersion = "22.05";
 
-    xdg.configFile."bat/config".source = ../../dotfiles/bat/config;
-    xdg.configFile."vscode/wrapper/vscode".source = ../../dotfiles/vscode/wrapper/vscode;
-    xdg.configFile."vscode-insiders/wrapper/code".source = ../../dotfiles/vscode-insiders/wrapper/code;
+    xdg = {
+      enable = true;
+
+      configFile."bat/config".source = ../../dotfiles/bat/config;
+      configFile."vscode/wrapper/vscode".source = ../../dotfiles/vscode/wrapper/vscode;
+      configFile."vscode-insiders/wrapper/code".source = ../../dotfiles/vscode-insiders/wrapper/code;
+    };
+
+    fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
       bash
@@ -50,6 +61,7 @@
       gitAndTools.diff-so-fancy
       httpie
       jq
+      (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
       openssh
       openssl
       pgcli
@@ -71,7 +83,6 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
-
 
     programs.git = {
       aliases = {
@@ -172,9 +183,11 @@
 
     programs.neovim = {
       enable = true;
+
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+
       withNodeJs = true;
 
       coc = {
@@ -191,8 +204,30 @@
             sha256 = "sha256-MobgwhFQ1Ld7pFknsurSFAsN5v+vGbEFojTAYD/kI9c=";
           };
           meta.homepage = "https://github.com/neoclide/coc.nvim/";
-       };
+        };
       };
+
+      plugins = with pkgs.vimPlugins; [
+        {
+          plugin = nvim-web-devicons;
+          type = "lua";
+          config = ''
+            require('nvim-web-devicons').setup {
+              default = true
+            }
+          '';
+        }
+
+        {
+          plugin = nvim-tree-lua;
+          type = "lua";
+          config = ''
+            require('nvim-tree').setup()
+          '';
+        }
+
+        vim-nix
+      ];
     };
 
     programs.ssh = {
