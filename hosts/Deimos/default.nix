@@ -246,6 +246,13 @@
             require('gitsigns').setup()
           '';
         }
+        {
+          plugin = trouble-nvim;
+          type = "lua";
+          config = ''
+            require("trouble").setup()
+          '';
+        }
 
         nvim-treesitter
         plenary-nvim
