@@ -268,6 +268,7 @@
 
         vim-nix
         vim-surround
+        nvim-autopairs
 
         telescope-nvim
       ];
