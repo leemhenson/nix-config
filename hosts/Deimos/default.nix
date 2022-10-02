@@ -265,6 +265,7 @@ in
       };
 
       initExtra = ''
+        HISTFILE=$HOME/Documents/zsh/.histfile
         KEYTIMEOUT=1
 
         # Do not require a leading '.' in a filename to be matched explicitly
