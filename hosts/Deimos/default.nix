@@ -249,6 +249,7 @@
 
         nvim-treesitter
         plenary-nvim
+        null-ls-nvim
         vim-nix
       ];
     };
