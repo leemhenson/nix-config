@@ -239,6 +239,13 @@
             require('colorizer').setup()
           '';
         }
+        {
+          plugin = gitsigns-nvim;
+          type = "lua";
+          config = ''
+            require('gitsigns').setup()
+          '';
+        }
 
         nvim-treesitter
         plenary-nvim
