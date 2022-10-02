@@ -223,6 +223,13 @@
           '';
         }
         {
+          plugin = lualine-nvim;
+          type = "lua";
+          config = ''
+            require('lualine').setup()
+          '';
+        }
+        {
           plugin = nvim-web-devicons;
           type = "lua";
           config = ''
@@ -231,7 +238,6 @@
             }
           '';
         }
-
         {
           plugin = nvim-tree-lua;
           type = "lua";
