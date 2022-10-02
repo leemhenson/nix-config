@@ -250,6 +250,7 @@
           '';
         }
 
+        nvim-treesitter
         vim-nix
       ];
     };
