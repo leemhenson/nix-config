@@ -226,7 +226,11 @@
           plugin = lualine-nvim;
           type = "lua";
           config = ''
-            require('lualine').setup()
+            require('lualine').setup {
+              options = {
+                theme = 'kanagawa'
+              }
+            }
           '';
         }
         {
