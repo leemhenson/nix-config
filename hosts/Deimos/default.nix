@@ -234,6 +234,7 @@
         }
 
         nvim-treesitter
+        plenary-nvim
         vim-nix
       ];
     };
