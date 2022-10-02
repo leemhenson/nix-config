@@ -245,10 +245,10 @@
           '';
         }
         {
-          plugin = nvim-surround;
+          plugin = nvim-comment;
           type = "lua";
           config = ''
-            require('nvim-surround').setup()
+            require("nvim_comment").setup()
           '';
         }
         {
