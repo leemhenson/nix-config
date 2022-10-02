@@ -260,6 +260,8 @@
         }
 
         vim-nix
+
+        telescope-nvim
       ];
     };
 
