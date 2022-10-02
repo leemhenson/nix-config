@@ -31,6 +31,7 @@ in
 
     casks = [
         "discord"
+        "iterm2"
         "warp"
     ];
   };
@@ -49,6 +50,17 @@ in
     };
 
     fonts.fontconfig.enable = true;
+
+    nixpkgs.config.allowUnfree = true;
+
+    home = {
+      file = {
+        iterm = {
+          source = ../../dotfiles/iterm2/profile.json;
+          target = "Library/Application Support/iTerm2/DynamicProfiles/profile.json";
+        };
+      };
+    };
 
     home.packages = with pkgs; [
       bash
