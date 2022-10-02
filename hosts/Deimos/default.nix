@@ -267,6 +267,7 @@
         }
 
         vim-nix
+        vim-surround
 
         telescope-nvim
       ];
