@@ -245,6 +245,13 @@
           '';
         }
         {
+          plugin = nvim-surround;
+          type = "lua";
+          config = ''
+            require('nvim-surround').setup()
+          '';
+        }
+        {
           plugin = gitsigns-nvim;
           type = "lua";
           config = ''
