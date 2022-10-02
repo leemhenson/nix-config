@@ -46,8 +46,8 @@ in
       enable = true;
 
       configFile."bat/config".source = ../../dotfiles/bat/config;
-      configFile."vscode/wrapper/vscode".source = ../../dotfiles/vscode/wrapper/vscode;
-      configFile."vscode-insiders/wrapper/code".source = ../../dotfiles/vscode-insiders/wrapper/code;
+      configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/vscode;
+      configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
     };
 
     fonts.fontconfig.enable = true;
