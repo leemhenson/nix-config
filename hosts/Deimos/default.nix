@@ -215,6 +215,14 @@
 
       plugins = with pkgs.vimPlugins; [
         {
+          plugin = kanagawa-nvim;
+          type = "lua";
+          config = ''
+            require('kanagawa').setup()
+            vim.cmd("colorscheme kanagawa")
+          '';
+        }
+        {
           plugin = nvim-web-devicons;
           type = "lua";
           config = ''
