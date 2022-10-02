@@ -197,6 +197,11 @@
       withNodeJs = true;
 
       plugins = with pkgs.vimPlugins; [
+        plenary-nvim
+        null-ls-nvim
+        nvim-lspconfig
+        nvim-treesitter
+
         {
           plugin = kanagawa-nvim;
           type = "lua";
@@ -254,10 +259,6 @@
           '';
         }
 
-        nvim-treesitter
-        plenary-nvim
-        null-ls-nvim
-        nvim-lspconfig
         vim-nix
       ];
     };
