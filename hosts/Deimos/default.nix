@@ -250,6 +250,7 @@
         nvim-treesitter
         plenary-nvim
         null-ls-nvim
+        nvim-lspconfig
         vim-nix
       ];
     };
