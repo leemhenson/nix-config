@@ -1,12 +1,5 @@
 { pkgs, ... }:
 
-let
-  mkLua = lua: ''
-    lua << EOF
-      ${lua}
-    EOF
-  '';
-in
 {
   users.users.leemhenson = {
     name = "leemhenson";
