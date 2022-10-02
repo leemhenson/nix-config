@@ -232,6 +232,13 @@
             require('nvim-tree').setup()
           '';
         }
+        {
+          plugin = nvim-colorizer-lua;
+          type = "lua";
+          config = ''
+            require('colorizer').setup()
+          '';
+        }
 
         nvim-treesitter
         plenary-nvim
