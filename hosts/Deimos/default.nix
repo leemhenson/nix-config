@@ -201,6 +201,8 @@
         null-ls-nvim
         nvim-lspconfig
         nvim-treesitter
+        nvim-cmp
+        cmp-buffer
 
         {
           plugin = kanagawa-nvim;
