@@ -234,7 +234,14 @@
           plugin = nvim-tree-lua;
           type = "lua";
           config = ''
-            require('nvim-tree').setup()
+            require('nvim-tree').setup {
+              actions = {
+                open_file = {
+                  quit_on_open = true,
+                  resize_window = false
+                }
+              }
+            }
           '';
         }
         {
