@@ -299,6 +299,39 @@
 
         telescope-nvim
       ];
+
+      extraConfig = ''
+        let g:mapleader="\<SPACE>"
+
+        set backupdir=~/.nvim/backup            " Directory for backups
+        set directory=~/.nvim/swap              " Directory for swapfiles
+        set undodir=~/.nvim/undo                " Directory for undos
+
+        set clipboard=unnamedplus               " Allow copy/paste from anywhere
+        set colorcolumn=100                     " Highlight 100th column
+        set cursorline                          " Highlight current line
+        set hidden                              " Enable hidden buffers (navigate away from buffer with unsaved changes)
+        set mouse=a                             " Enable the mouse in all modes
+        set noshowmode                          " Disable current-mode message
+        set noswapfile                          " Disable swap files for buffers
+        set nowrap                              " Disable line wrapping
+        set nowritebackup                       " Don't use file backups
+        set number                              " Show line numbers
+        set scrolloff=30                        " Number of lines to show around cursor
+        set shada=" "                           " Disable shada
+        set shadafile=NONE                      " Disable shada
+        set shiftwidth=2                        " Number of spaces to use for each step of (auto)indent
+        set shortmess=c                         " Don't show completion messages
+        set signcolumn=yes                      " Always render a sign column
+        set smartindent                         " Use smart autoindenting when starting a new line
+        set splitbelow                          " Open new splits below
+        set splitright                          " Open new splits to the right
+        set tabstop=2                           " Number of spaces that a <Tab> in the file counts for
+        set termguicolors                       " Enable 24-bit colors in terminal vim
+        set timeoutlen=750                      " Time to wait for key combo
+
+        nnoremap <ESC> :nohlsearch<CR>          " Clear search results
+      '';
     };
 
     programs.ssh = {
