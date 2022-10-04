@@ -3,6 +3,7 @@
     {
       "ASCII Anti Aliased": true,
       "ASCII Ligatures": true,
+      "Allow modifyOtherKeys": true,
       "Ambiguous Double Width": false,
       "Ansi 0 Color": {
         "Alpha Component": 1,
