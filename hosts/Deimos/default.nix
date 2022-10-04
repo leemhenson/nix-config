@@ -1,6 +1,15 @@
 { pkgs, ... }:
 
 let
+  cmp-npm = pkgs.vimUtils.buildVimPlugin {
+    name = "cmp-npm";
+    src = pkgs.fetchFromGitHub {
+      owner = "David-Kunz";
+      repo = "cmp-npm";
+      rev = "4b6166c3feeaf8dae162e33ee319dc5880e44a29";
+      sha256 = "QggQ+axMaFcUCt2gfSpsDpM0YlxEkAiDCctzfYtceVI=";
+    };
+  };
   nvim-scrollbar = pkgs.vimUtils.buildVimPlugin {
     name = "nvim-scrollbar";
     src = pkgs.fetchFromGitHub {
@@ -228,16 +237,38 @@ in
 
         null-ls-nvim
         nvim-lspconfig
+        lspkind-nvim
+        # {
+        #   plugin = lspkind-nvim;
+        #   type = "lua";
+        #   config = ''
+        #     require('lspkind').init()
+        #   '';
+        # }
 
         cmp-buffer
+        cmp-emoji
+        cmp-npm
         cmp-nvim-lsp
+        cmp-nvim-ultisnips
+        cmp-path
         {
           plugin = nvim-cmp;
           type = "lua";
           config = ''
             local cmp = require "cmp"
+            local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+            local lspkind = require('lspkind')
 
             cmp.setup {
+              formatting = {
+                format = lspkind.cmp_format({
+                  mode = 'symbol', -- show only symbol annotations
+                  maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                  ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+                })
+              },
+
               mapping = cmp.mapping.preset.insert({
                 ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
@@ -245,9 +276,20 @@ in
                 ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
               }),
 
+              snippet = {
+                expand = function(args)
+                  vim.fn["UltiSnips#Anon"](args.body)
+                end,
+              },
+
               sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
+              },{
                 { name = 'buffer' },
+                { name = 'emoji' },
+                { name = 'npm', keyword_length = 3 },
+                { name = 'path' },
+                { name = "ultisnips" },
               })
             }
 
@@ -327,11 +369,19 @@ in
             wk.setup()
             wk.register({
               ["<leader>"] = {
+                b = {
+                  name = "+buffer",
+                  f = { "<cmd>Telescope buffers<cr>", "Find buffer" },
+                },
+                c = {
+                  name = "+command",
+                  f = { "<cmd>Telescope commands<cr>", "Find command" },
+                },
                 f = {
                   name = "+file",
-                  f = { "<cmd>Telescope find_files<cr>", "Find File" },
-                  r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+                  f = { "<cmd>Telescope find_files<cr>", "Find file" },
                   n = { "<cmd>enew<cr>", "New File" },
+                  r = { "<cmd>Telescope oldfiles<cr>", "Recent file" },
                 },
               },
             })
@@ -347,7 +397,14 @@ in
 
         vim-nix
         vim-surround
-        nvim-autopairs
+
+        {
+          plugin = nvim-autopairs;
+          type = "lua";
+          config = ''
+            require("nvim-autopairs").setup()
+          '';
+        }
 
         telescope-nvim
 
