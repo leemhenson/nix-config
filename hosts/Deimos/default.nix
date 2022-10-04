@@ -54,28 +54,28 @@
           target = "Library/Application Support/iTerm2/DynamicProfiles/profile.json";
         };
       };
-    };
 
-    home.packages = with pkgs; [
-      bash
-      bat
-      cmake
-      coreutils
-      curl
-      fd
-      gawk
-      gitAndTools.diff-so-fancy
-      httpie
-      jq
-      (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
-      openssh
-      openssl
-      pgcli
-      readline
-      ripgrep
-      tldr
-      wget
-    ];
+      packages = with pkgs; [
+        bash
+        bat
+        cmake
+        coreutils
+        curl
+        fd
+        gawk
+        gitAndTools.diff-so-fancy
+        httpie
+        jq
+        (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
+        openssh
+        openssl
+        pgcli
+        readline
+        ripgrep
+        tldr
+        wget
+      ];
+    };
 
     programs.direnv = {
       enable = true;
