@@ -28,6 +28,15 @@ let
       sha256 = "EqHoR/vdifrN3uhrA0AoJVXKf5jKxznJEgKh8bXm2PQ=";
     };
   };
+  nvim-surround = pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-surround";
+    src = pkgs.fetchFromGitHub {
+      owner = "kylechui";
+      repo = "nvim-surround";
+      rev = "17191679202978b1de8c1bd5d975400897b1b92d";
+      sha256 = "LTlRdNJzrmh0UJWcxdkp9gg/I/sdIwPhb/8GO//BOzU=";
+    };
+  };
   lualine-lsp-progress = pkgs.vimUtils.buildVimPlugin {
     name = "lualine-lsp-progress";
     src = pkgs.fetchFromGitHub {
@@ -400,7 +409,13 @@ in
         }
 
         vim-nix
-        vim-surround
+        {
+          plugin = nvim-surround;
+          type = "lua";
+          config = ''
+            require("nvim-surround").setup()
+          '';
+        }
         {
           plugin = hop-nvim;
           type = "lua";
