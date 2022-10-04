@@ -1,5 +1,16 @@
 { pkgs, ... }:
 
+let
+  nvim-scrollbar = pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-scrollbar";
+    src = pkgs.fetchFromGitHub {
+      owner = "petertriho";
+      repo = "nvim-scrollbar";
+      rev = "ce0df6954a69d61315452f23f427566dc1e937ae";
+      sha256 = "EqHoR/vdifrN3uhrA0AoJVXKf5jKxznJEgKh8bXm2PQ=";
+    };
+  };
+in
 {
   users.users.leemhenson = {
     name = "leemhenson";
@@ -290,6 +301,13 @@
                 },
               },
             })
+          '';
+        }
+        {
+          plugin = nvim-scrollbar;
+          type = "lua";
+          config = ''
+            require("scrollbar").setup()
           '';
         }
 
