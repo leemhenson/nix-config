@@ -10,6 +10,15 @@ let
       sha256 = "QggQ+axMaFcUCt2gfSpsDpM0YlxEkAiDCctzfYtceVI=";
     };
   };
+  cmp-nvim-lsp-signature-help = pkgs.vimUtils.buildVimPlugin {
+    name = "cmp-nvim-lsp-signature-help";
+    src = pkgs.fetchFromGitHub {
+      owner = "hrsh7th";
+      repo = "cmp-nvim-lsp-signature-help";
+      rev = "3dd40097196bdffe5f868d5dddcc0aa146ae41eb";
+      sha256 = "/J/QRxiozsQFrwMcE/jTdbW3pQOR4xxtDCZ1X/gFyk0=";
+    };
+  };
   nvim-scrollbar = pkgs.vimUtils.buildVimPlugin {
     name = "nvim-scrollbar";
     src = pkgs.fetchFromGitHub {
@@ -238,18 +247,12 @@ in
         null-ls-nvim
         nvim-lspconfig
         lspkind-nvim
-        # {
-        #   plugin = lspkind-nvim;
-        #   type = "lua";
-        #   config = ''
-        #     require('lspkind').init()
-        #   '';
-        # }
 
         cmp-buffer
         cmp-emoji
         cmp-npm
         cmp-nvim-lsp
+        cmp-nvim-lsp-signature-help
         cmp-nvim-ultisnips
         cmp-path
         {
@@ -284,6 +287,7 @@ in
 
               sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
+                { name = 'nvim_lsp_signature_help' },
               },{
                 { name = 'buffer' },
                 { name = 'emoji' },
