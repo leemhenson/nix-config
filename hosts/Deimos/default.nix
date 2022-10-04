@@ -10,6 +10,15 @@ let
       sha256 = "EqHoR/vdifrN3uhrA0AoJVXKf5jKxznJEgKh8bXm2PQ=";
     };
   };
+  lualine-lsp-progress = pkgs.vimUtils.buildVimPlugin {
+    name = "lualine-lsp-progress";
+    src = pkgs.fetchFromGitHub {
+      owner = "WhoIsSethDaniel";
+      repo = "lualine-lsp-progress.nvim";
+      rev = "16380c531efad8131ba0f395bdeb97fa2ae169f4";
+      sha256 = "pn40lMYSe5W1rFeF4TIlH+I64U7zK2m4VeyQQBRf+nw=";
+    };
+  };
 in
 {
   users.users.leemhenson = {
@@ -78,6 +87,7 @@ in
         httpie
         jq
         (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
+        nodejs
         openssh
         openssl
         pgcli
@@ -207,13 +217,48 @@ in
 
       withNodeJs = true;
 
+      extraPackages = with pkgs.nodePackages; [
+        typescript
+        typescript-language-server
+      ];
+
       plugins = with pkgs.vimPlugins; [
         plenary-nvim
+        nvim-treesitter
+
         null-ls-nvim
         nvim-lspconfig
-        nvim-treesitter
-        nvim-cmp
+
         cmp-buffer
+        cmp-nvim-lsp
+        {
+          plugin = nvim-cmp;
+          type = "lua";
+          config = ''
+            local cmp = require "cmp"
+
+            cmp.setup {
+              mapping = cmp.mapping.preset.insert({
+                ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+                ['<Esc>'] = cmp.mapping.abort(),
+                ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+              }),
+
+              sources = cmp.config.sources({
+                { name = 'nvim_lsp' },
+                { name = 'buffer' },
+              })
+            }
+
+            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+            local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(lsp_capabilities)
+
+            require('lspconfig').tsserver.setup {
+              capabilities = cmp_capabilities
+            }
+          '';
+        }
 
         {
           plugin = kanagawa-nvim;
@@ -221,17 +266,6 @@ in
           config = ''
             require('kanagawa').setup()
             vim.cmd("colorscheme kanagawa")
-          '';
-        }
-        {
-          plugin = lualine-nvim;
-          type = "lua";
-          config = ''
-            require('lualine').setup {
-              options = {
-                theme = 'kanagawa'
-              }
-            }
           '';
         }
         {
@@ -316,6 +350,34 @@ in
         nvim-autopairs
 
         telescope-nvim
+
+        lualine-lsp-progress
+        {
+          plugin = lualine-nvim;
+          type = "lua";
+          config = ''
+            require('lualine').setup {
+              options = {
+                theme = 'kanagawa'
+              },
+              sections = {
+                lualine_c = {
+                  'lsp_progress'
+                }
+              }
+            }
+          '';
+        }
+
+        # This is for nvim-lightbulb, can be removed with neovim 0.8
+        FixCursorHold-nvim
+        {
+          plugin = nvim-lightbulb;
+          type = "lua";
+          config = ''
+            require('nvim-lightbulb').setup({ autocmd = { enabled = true }})
+          '';
+        }
       ];
 
       extraConfig = ''
