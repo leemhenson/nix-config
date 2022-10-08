@@ -425,6 +425,16 @@ in
         autocmd VimEnter * call HighlightConflictMarker()
       '';
     }
+
+    # {
+    #   plugin = legendary-nvim;
+    #   type = "lua";
+    #   config = ''
+    #     require('legendary').setup({
+    #       include_builtin = true,
+    #     })
+    #   '';
+    # }
   ];
 
   extraConfig = builtins.readFile ../../dotfiles/nvim/extra-config.vim;
