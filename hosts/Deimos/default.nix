@@ -46,7 +46,6 @@
           curl
           fd
           gawk
-          gitAndTools.diff-so-fancy
           httpie
           jq
           (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -65,7 +64,7 @@
 
       programs.direnv = import ../../dotfiles/direnv/direnv.nix;
       programs.fzf = import ../../dotfiles/fzf/fzf.nix;
-      programs.git = import ../../dotfiles/git/git.nix;
+      programs.git = import ../../dotfiles/git/git.nix pkgs;
       programs.htop.enable = true;
       programs.man.enable = true;
       programs.neovim = import ../../dotfiles/nvim/nvim.nix pkgs;

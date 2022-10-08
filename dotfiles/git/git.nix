@@ -1,6 +1,10 @@
-{
+pkgs: {
   aliases = {
     tree = "log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order";
+  };
+
+  difftastic = {
+    enable = true;
   };
 
   enable = true;
@@ -24,16 +28,8 @@
     };
 
     core = {
-      editor = "$HOME/.config/vscode-insiders/wrapper/code-insiders --wait";
+      editor = "${pkgs.neovim}/bin/nvim";
       excludesfile = "$HOME/.config/git/ignore";
-    };
-
-    diff.tool = "Kaleidoscope";
-
-    difftool = {
-      prompt = false;
-
-      Kaleidoscope.cmd = "ksdiff --partial-changeset --relative-path \\\"$MERGED\\\" -- \\\"$LOCAL\\\" \\\"$REMOTE\\\";";
     };
 
     fetch.prune = true;
@@ -41,25 +37,11 @@
 
     merge = {
       renameLimit = 1000000;
-      tool = "vscode";
+      tool = "nvimdiff3";
     };
 
     mergetool = {
       keepBackup = false;
-
-      Kaleidoscope = {
-        cmd = "ksdiff --merge --output \\\"$MERGED\\\" --base \\\"$BASE\\\" -- \\\"$LOCAL\\\" --snapshot \\\"$REMOTE\\\" --snapshot";
-        trustExitCode = true;
-      };
-
-      vscode = {
-        cmd = "$HOME/.config/vscode-insiders/wrapper/code-insiders --wait $MERGED";
-      };
-    };
-
-    pager = {
-      diff = "diff-so-fancy | less --tabs=2 -RFX";
-      show = "diff-so-fancy | less --tabs=4 -RFX";
     };
 
     pull.rebase = true;
