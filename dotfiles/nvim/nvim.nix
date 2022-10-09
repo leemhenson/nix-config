@@ -2,6 +2,8 @@ pkgs:
 
 let
   conflict-marker-vim = pkgs.callPackage ./plugins/conflict-marker-vim/plugin.nix pkgs;
+  fixcursorhold-nvim = pkgs.callPackage ./plugins/fixcursorhold-nvim/plugin.nix pkgs;
+  fidget-nvim = pkgs.callPackage ./plugins/fidget-nvim/plugin.nix pkgs;
   git-blame-nvim = pkgs.callPackage ./plugins/git-blame-nvim/plugin.nix pkgs;
   nvim-lightbulb = pkgs.callPackage ./plugins/nvim-lightbulb/plugin.nix pkgs;
   nvim-notify = pkgs.callPackage ./plugins/nvim-notify/plugin.nix pkgs;
@@ -91,12 +93,12 @@ in
 
   withNodeJs = true;
 
-  extraPackages = with pkgs.nodePackages; [
-    dockerfile-language-server-nodejs
-    typescript
-    typescript-language-server
-    vscode-langservers-extracted
-    yaml-language-server
+  extraPackages = with pkgs; [
+    nodePackages.dockerfile-language-server-nodejs
+    nodePackages.typescript
+    nodePackages.typescript-language-server
+    nodePackages.vscode-langservers-extracted
+    nodePackages.yaml-language-server
   ];
 
   plugins = with pkgs.vimPlugins; [
@@ -378,33 +380,25 @@ in
 
     telescope-nvim
 
-    lualine-lsp-progress
-    {
-      plugin = lualine-nvim;
-      type = "lua";
-      config = ''
-        require('lualine').setup {
-          options = {
-            theme = 'kanagawa'
-          },
-          sections = {
-            lualine_c = {
-              'lsp_progress'
-            }
-          }
-        }
-      '';
-    }
-
-    # This is for nvim-lightbulb, can be removed with neovim 0.8
-    FixCursorHold-nvim
-
     {
       plugin = conflict-marker-vim;
       config = builtins.readFile ../../dotfiles/nvim/plugins/conflict-marker-vim/config.viml;
     }
     {
+      plugin = fidget-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/fidget-nvim/config.lua;
+    }
+    {
+      plugin = fixcursorhold-nvim; # this is for nvim-lightbulb, can be removed with neovim 0.8
+    }
+    {
       plugin = git-blame-nvim;
+    }
+    {
+      plugin = lualine-nvim; # can't build this locally, so have to pull it from nixpkgs
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/lualine-nvim/config.lua;
     }
     {
       plugin = neogit; # can't build this locally, so have to pull it from nixpkgs
