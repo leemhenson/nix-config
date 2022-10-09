@@ -2,7 +2,10 @@ pkgs:
 
 let
   conflict-marker-vim = pkgs.callPackage ./plugins/conflict-marker-vim/plugin.nix pkgs;
+  git-blame-nvim = pkgs.callPackage ./plugins/git-blame-nvim/plugin.nix pkgs;
+  nvim-notify = pkgs.callPackage ./plugins/nvim-notify/plugin.nix pkgs;
   telescope-command-palette = pkgs.callPackage ./plugins/telescope-command-palette/plugin.nix pkgs;
+  vim-visual-multi = pkgs.callPackage ./plugins/vim-visual-multi/plugin.nix pkgs;
 
   cmp-npm = pkgs.vimUtils.buildVimPlugin {
     name = "cmp-npm";
@@ -410,18 +413,29 @@ in
       '';
     }
 
-    neogit
-    git-blame-nvim
-    nvim-notify
-
     {
       plugin = conflict-marker-vim;
       config = builtins.readFile ../../dotfiles/nvim/plugins/conflict-marker-vim/config.viml;
     }
     {
+      plugin = git-blame-nvim;
+    }
+    {
+      # can't build this locally, so have to pull it from nixpkgs
+      plugin = neogit;
+    }
+    {
+      plugin = nvim-notify;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-notify/config.lua;
+    }
+    {
       plugin = telescope-command-palette;
       type = "lua";
       config = builtins.readFile ../../dotfiles/nvim/plugins/telescope-command-palette/config.lua;
+    }
+    {
+      plugin = vim-visual-multi;
     }
   ];
 
