@@ -3,7 +3,9 @@ pkgs:
 let
   conflict-marker-vim = pkgs.callPackage ./plugins/conflict-marker-vim/plugin.nix pkgs;
   git-blame-nvim = pkgs.callPackage ./plugins/git-blame-nvim/plugin.nix pkgs;
+  nvim-lightbulb = pkgs.callPackage ./plugins/nvim-lightbulb/plugin.nix pkgs;
   nvim-notify = pkgs.callPackage ./plugins/nvim-notify/plugin.nix pkgs;
+  project-nvim = pkgs.callPackage ./plugins/project-nvim/plugin.nix pkgs;
   telescope-command-palette = pkgs.callPackage ./plugins/telescope-command-palette/plugin.nix pkgs;
   vim-visual-multi = pkgs.callPackage ./plugins/vim-visual-multi/plugin.nix pkgs;
 
@@ -396,22 +398,6 @@ in
 
     # This is for nvim-lightbulb, can be removed with neovim 0.8
     FixCursorHold-nvim
-    {
-      plugin = nvim-lightbulb;
-      type = "lua";
-      config = ''
-        require('nvim-lightbulb').setup({ autocmd = { enabled = true }})
-      '';
-    }
-
-    {
-      plugin = project-nvim;
-      type = "lua";
-      config = ''
-        require("project_nvim").setup()
-        require('telescope').load_extension('projects')
-      '';
-    }
 
     {
       plugin = conflict-marker-vim;
@@ -421,13 +407,22 @@ in
       plugin = git-blame-nvim;
     }
     {
-      # can't build this locally, so have to pull it from nixpkgs
-      plugin = neogit;
+      plugin = neogit; # can't build this locally, so have to pull it from nixpkgs
+    }
+    {
+      plugin = nvim-lightbulb;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-lightbulb/config.lua;
     }
     {
       plugin = nvim-notify;
       type = "lua";
       config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-notify/config.lua;
+    }
+    {
+      plugin = project-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/project-nvim/config.lua;
     }
     {
       plugin = telescope-command-palette;
