@@ -2,7 +2,7 @@
   enable = true;
   matchBlocks = {
     "github.com" = {
-      identityFile = "$HOME/.ssh/github";
+      identityFile = "~/.ssh/github";
     };
   };
 }
