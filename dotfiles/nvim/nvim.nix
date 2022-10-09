@@ -1,6 +1,9 @@
 pkgs:
 
 let
+  conflict-marker-vim = pkgs.callPackage ./plugins/conflict-marker-vim/plugin.nix pkgs;
+  telescope-command-palette = pkgs.callPackage ./plugins/telescope-command-palette/plugin.nix pkgs;
+
   cmp-npm = pkgs.vimUtils.buildVimPlugin {
     name = "cmp-npm";
     src = pkgs.fetchFromGitHub {
@@ -413,28 +416,13 @@ in
 
     {
       plugin = conflict-marker-vim;
-      config = ''
-        function! HighlightConflictMarker() abort
-            highlight ConflictMarkerBegin guibg=#2f7366
-            highlight ConflictMarkerOurs guibg=#2e5049
-            highlight ConflictMarkerTheirs guibg=#344f69
-            highlight ConflictMarkerEnd guibg=#2f628e
-            highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
-        endfunction
-
-        autocmd VimEnter * call HighlightConflictMarker()
-      '';
+      config = builtins.readFile ../../dotfiles/nvim/plugins/conflict-marker-vim/config.viml;
     }
-
-    # {
-    #   plugin = legendary-nvim;
-    #   type = "lua";
-    #   config = ''
-    #     require('legendary').setup({
-    #       include_builtin = true,
-    #     })
-    #   '';
-    # }
+    {
+      plugin = telescope-command-palette;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/telescope-command-palette/config.lua;
+    }
   ];
 
   extraConfig = builtins.readFile ../../dotfiles/nvim/extra-config.vim;
