@@ -41,4 +41,15 @@ require 'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
   },
+
+  textobjects = {
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["<leader>pf"] = "@function.outer",
+        ["<leader>pc"] = "@class.outer"
+      },
+    },
+  },
 }

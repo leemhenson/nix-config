@@ -7,12 +7,15 @@ let
   fixcursorhold-nvim = pkgs.callPackage ./plugins/fixcursorhold-nvim/plugin.nix pkgs;
   fidget-nvim = pkgs.callPackage ./plugins/fidget-nvim/plugin.nix pkgs;
   git-blame-nvim = pkgs.callPackage ./plugins/git-blame-nvim/plugin.nix pkgs;
+  incline-nvim = pkgs.callPackage ./plugins/incline-nvim/plugin.nix pkgs;
+  jabs-nvim = pkgs.callPackage ./plugins/jabs-nvim/plugin.nix pkgs;
   move-nvim = pkgs.callPackage ./plugins/move-nvim/plugin.nix pkgs;
   nvim-lightbulb = pkgs.callPackage ./plugins/nvim-lightbulb/plugin.nix pkgs;
   nvim-notify = pkgs.callPackage ./plugins/nvim-notify/plugin.nix pkgs;
   nvim-scrollbar = pkgs.callPackage ./plugins/nvim-scrollbar/plugin.nix pkgs;
   nvim-surround = pkgs.callPackage ./plugins/nvim-surround/plugin.nix pkgs;
   nvim-tree = pkgs.callPackage ./plugins/nvim-tree/plugin.nix pkgs;
+  nvim-treesitter-textsubjects = pkgs.callPackage ./plugins/nvim-treesitter-textsubjects/plugin.nix pkgs;
   project-nvim = pkgs.callPackage ./plugins/project-nvim/plugin.nix pkgs;
   telescope-command-palette = pkgs.callPackage ./plugins/telescope-command-palette/plugin.nix pkgs;
   vim-visual-multi = pkgs.callPackage ./plugins/vim-visual-multi/plugin.nix pkgs;
@@ -83,6 +86,16 @@ in
       config = builtins.readFile ../../dotfiles/nvim/plugins/hop-nvim/config.lua;
     }
     {
+      plugin = incline-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/incline-nvim/config.lua;
+    }
+    {
+      plugin = jabs-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/jabs-nvim/config.lua;
+    }
+    {
       plugin = kanagawa-nvim;
       type = "lua";
       config = builtins.readFile ../../dotfiles/nvim/plugins/kanagawa-nvim/config.lua;
@@ -142,6 +155,11 @@ in
       plugin = nvim-lspconfig;
     }
     {
+      plugin = nvim-neoclip-lua;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-neoclip-lua/config.lua;
+    }
+    {
       plugin = nvim-notify;
       type = "lua";
       config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-notify/config.lua;
@@ -167,7 +185,20 @@ in
       config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-treesitter/config.lua;
     }
     {
+      plugin = nvim-treesitter-textobjects;
+    }
+    {
+      plugin = nvim-treesitter-textsubjects;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-treesitter-textsubjects/config.lua;
+    }
+    {
       plugin = nvim-ts-autotag; # can't build this locally, so have to pull it from nixpkgs
+    }
+    {
+      plugin = nvim-ts-rainbow;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/nvim-ts-rainbow/config.lua;
     }
     {
       plugin = nvim-web-devicons;
@@ -189,6 +220,11 @@ in
       plugin = telescope-command-palette;
       type = "lua";
       config = builtins.readFile ../../dotfiles/nvim/plugins/telescope-command-palette/config.lua;
+    }
+    {
+      plugin = todo-comments-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/todo-comments-nvim/config.lua;
     }
     {
       plugin = trouble-nvim;
