@@ -8,6 +8,12 @@
 
   services.nix-daemon.enable = true; # Make sure the nix daemon always runs
   security.pam.enableSudoTouchIdAuth = true;
+
+  system.defaults.NSGlobalDomain.NSAutomaticCapitalizationEnabled = false;
+  system.defaults.NSGlobalDomain.NSAutomaticDashSubstitutionEnabled = false;
+  system.defaults.NSGlobalDomain.NSAutomaticPeriodSubstitutionEnabled = false;
+  system.defaults.NSGlobalDomain.NSAutomaticQuoteSubstitutionEnabled = false;
+  system.defaults.NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
   system.keyboard.remapCapsLockToControl = true;
 
   homebrew = import ../../dotfiles/homebrew/homebrew.nix;
