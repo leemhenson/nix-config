@@ -1,1 +1,1 @@
-./result/sw/bin/darwin-rebuild switch --flake .
+./result/sw/bin/darwin-rebuild switch --flake . --impure
