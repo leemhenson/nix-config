@@ -19,6 +19,7 @@
 
     users.leemhenson = { pkgs, ... }: {
       fonts.fontconfig.enable = true;
+
       nixpkgs.config.allowUnfree = true;
 
       xdg = {
