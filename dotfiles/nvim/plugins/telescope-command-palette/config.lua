@@ -42,6 +42,6 @@ require('telescope').setup({
 
 require('telescope').load_extension('command_palette')
 
-vim.api.nvim_set_keymap('i', '<C-P>', '<cmd>:Telescope command-palette<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-P>', '<cmd>:Telescope command-palette<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<C-P>', '<cmd>:Telescope command-palette<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-p>', ':Telescope command_palette<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope command_palette<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-p>', ':Telescope command_palette<cr>', { noremap = true, silent = true })
