@@ -8,6 +8,7 @@
 
   services.nix-daemon.enable = true; # Make sure the nix daemon always runs
   security.pam.enableSudoTouchIdAuth = true;
+  system.keyboard.remapCapsLockToControl = true;
 
   homebrew = import ../../dotfiles/homebrew/homebrew.nix;
   programs.gnupg.agent.enable = true;
