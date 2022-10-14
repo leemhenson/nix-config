@@ -1,1 +1,1 @@
-./result/sw/bin/darwin-rebuild switch --flake . --impure
+NIXPKGS_ALLOW_BROKEN=1 ./result/sw/bin/darwin-rebuild switch --flake . --impure

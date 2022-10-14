@@ -28,7 +28,7 @@ pkgs: {
         owner = "djui";
         repo = "alias-tips";
         rev = "cd13ef223c4f310d774cdf8cb0435474cc2bcbbe";
-        sha256 = "ffD0iHf9WVuE6QzZCkuDgIWj+BY/BRxtYNMi8osJohI=";
+        sha256 = "fDYAJSJHatxHhAT68AH4PuIHdwxFXipAoDHITVpkkkE=";
       };
     }
     {

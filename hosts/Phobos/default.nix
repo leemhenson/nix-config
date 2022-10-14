@@ -14,11 +14,23 @@
   system.defaults.NSGlobalDomain.NSAutomaticPeriodSubstitutionEnabled = false;
   system.defaults.NSGlobalDomain.NSAutomaticQuoteSubstitutionEnabled = false;
   system.defaults.NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
+	system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
 
   homebrew = import ../../dotfiles/homebrew/homebrew.nix;
-  programs.gnupg.agent.enable = true;
-  programs.zsh.enable = true;
+
+  programs = {
+		gnupg = {
+			agent = {
+				enable = true;
+				enableSSHSupport = true;
+			};
+		};
+
+  	zsh = {
+			enable = true;
+		};
+	};
 
   home-manager = {
     useGlobalPkgs = true;
@@ -71,14 +83,17 @@
         stateVersion = "22.05";
       };
 
-      programs.direnv = import ../../dotfiles/direnv/direnv.nix;
-      programs.fzf = import ../../dotfiles/fzf/fzf.nix;
-      programs.git = import ../../dotfiles/git/git.nix pkgs;
-      programs.htop.enable = true;
-      programs.man.enable = true;
-      programs.neovim = import ../../dotfiles/nvim/nvim.nix pkgs;
-      programs.ssh = import ../../dotfiles/ssh/ssh.nix;
-      programs.zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
+			programs = {
+      	direnv = import ../../dotfiles/direnv/direnv.nix;
+				fzf = import ../../dotfiles/fzf/fzf.nix;
+				git = import ../../dotfiles/git/git.nix pkgs;
+				gpg.enable = true;
+				htop.enable = true;
+				man.enable = true;
+				neovim = import ../../dotfiles/nvim/nvim.nix pkgs;
+				ssh = import ../../dotfiles/ssh/ssh.nix;
+				zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
+			};
     };
   };
 }

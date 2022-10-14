@@ -215,8 +215,6 @@ in
     }
     {
       plugin = registers-nvim;
-      type = "lua";
-      config = builtins.readFile ../../dotfiles/nvim/plugins/registers-nvim/config.lua;
     }
     {
       plugin = renamer-nvim;
