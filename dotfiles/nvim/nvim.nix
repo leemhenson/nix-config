@@ -214,6 +214,16 @@ in
       config = builtins.readFile ../../dotfiles/nvim/plugins/project-nvim/config.lua;
     }
     {
+      plugin = registers-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/registers-nvim/config.lua;
+    }
+    {
+      plugin = renamer-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/renamer-nvim/config.lua;
+    }
+    {
       plugin = telescope-nvim; # can't build this locally, so have to pull it from nixpkgs
     }
     {
