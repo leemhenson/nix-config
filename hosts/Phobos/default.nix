@@ -9,13 +9,34 @@
   services.nix-daemon.enable = true; # Make sure the nix daemon always runs
   security.pam.enableSudoTouchIdAuth = true;
 
-  system.defaults.NSGlobalDomain.NSAutomaticCapitalizationEnabled = false;
-  system.defaults.NSGlobalDomain.NSAutomaticDashSubstitutionEnabled = false;
-  system.defaults.NSGlobalDomain.NSAutomaticPeriodSubstitutionEnabled = false;
-  system.defaults.NSGlobalDomain.NSAutomaticQuoteSubstitutionEnabled = false;
-  system.defaults.NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
-	system.keyboard.enableKeyMapping = true;
-  system.keyboard.remapCapsLockToControl = true;
+  system = {
+		defaults = {
+			NSGlobalDomain = {
+				NSAutomaticCapitalizationEnabled = false;
+  			NSAutomaticDashSubstitutionEnabled = false;
+  			NSAutomaticPeriodSubstitutionEnabled = false;
+  			NSAutomaticQuoteSubstitutionEnabled = false;
+  			NSAutomaticSpellingCorrectionEnabled = false;
+			};
+
+			dock = {
+				autohide = true;
+			};
+		
+			finder = {
+				FXPreferredViewStyle = "Nlsv";
+			};
+
+			trackpad = {
+				Clicking = true;
+			};
+		};
+
+		keyboard = {
+			enableKeyMapping = true;
+  		remapCapsLockToControl = true;
+		};
+	};
 
   homebrew = import ../../dotfiles/homebrew/homebrew.nix;
 
