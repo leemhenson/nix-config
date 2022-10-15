@@ -21,6 +21,9 @@ set completeopt=menu,menuone,noselect,noinsert
 " Highlight current line
 set cursorline
 
+" Insert spaces instead of tabs
+set expandtab
+
 " Enable hidden buffers (navigate away from buffer with unsaved changes)
 set hidden
 

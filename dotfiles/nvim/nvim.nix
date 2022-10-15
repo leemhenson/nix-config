@@ -31,7 +31,10 @@ in
   withNodeJs = true;
 
   extraPackages = with pkgs; [
+    deadnix
     nodePackages.dockerfile-language-server-nodejs
+    nodePackages.jsonlint
+    nodePackages.prettier
     nodePackages.typescript
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
@@ -116,6 +119,8 @@ in
     }
     {
       plugin = null-ls-nvim;
+      type = "lua";
+      config = builtins.readFile ../../dotfiles/nvim/plugins/null-ls-nvim/config.lua;
     }
     {
       plugin = nvim-autopairs;
