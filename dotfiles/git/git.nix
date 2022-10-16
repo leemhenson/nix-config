@@ -28,7 +28,7 @@ pkgs: {
     };
 
     core = {
-      editor = "${pkgs.neovim}/bin/nvim";
+      editor = "$HOME/.local/bin/lvim";
       excludesfile = "$HOME/.config/git/ignore";
     };
 
@@ -37,11 +37,15 @@ pkgs: {
 
     merge = {
       renameLimit = 1000000;
-      tool = "nvimdiff3";
+      tool = "lvimdiff3";
     };
 
     mergetool = {
       keepBackup = false;
+
+      lvimdiff3 = {
+        cmd = "lvim -f -d -c 'hid | hid | hid' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"";
+      };
     };
 
     pull.rebase = true;

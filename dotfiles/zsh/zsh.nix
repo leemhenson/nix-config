@@ -57,7 +57,7 @@ pkgs: {
     BAT_PAGER = "";
     CLICOLOR = "true";
     NPM_CONFIG_USERCONFIG = "$HOME/Documents/dotfiles/npmrc";
-    PATH = "$HOME/.config/vscode/wrapper:$HOME/.config/vscode-insiders/wrapper:$PATH";
+    PATH = "$HOME/.config/vscode/wrapper:$HOME/.config/vscode-insiders/wrapper:$HOME/.local/bin:$PATH:/opt/homebrew/bin";
   };
 
   shellAliases = {

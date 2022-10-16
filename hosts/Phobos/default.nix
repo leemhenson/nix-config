@@ -67,10 +67,10 @@
         enable = true;
 
         configFile."bat/config".source = ../../dotfiles/bat/config;
-        configFile."nvim/lua" = {
-          source = ../../dotfiles/nvim/config;
-          recursive = true;
-        }; 
+        # configFile."nvim/lua" = {
+        #   source = ../../dotfiles/nvim/config;
+        #   recursive = true;
+        # }; 
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
       };
@@ -86,13 +86,18 @@
         packages = with pkgs; [
           bash
           bat
+          cargo
           cmake
           colima
           coreutils
           curl
           fd
+          ffmpeg
           gawk
+          git-lfs
           httpie
+          imagemagick
+          jdk11
           jq
           (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
           nodejs
@@ -102,6 +107,7 @@
           readline
           ripgrep
           tldr
+          watchman
           wget
         ];
 
@@ -115,7 +121,7 @@
 				gpg.enable = true;
 				htop.enable = true;
 				man.enable = true;
-				neovim = import ../../dotfiles/nvim/nvim.nix pkgs;
+				# neovim = import ../../dotfiles/nvim/nvim.nix pkgs;
 				ssh = import ../../dotfiles/ssh/ssh.nix;
 				zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
 			};

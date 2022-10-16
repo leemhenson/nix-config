@@ -6,10 +6,14 @@
     upgrade = true;
   };
 
+  brews = [
+    "neovim"
+  ];
+
   casks = [
-      "discord"
-      "iterm2"
-      "visual-studio-code"
-      "warp"
+    "discord"
+    "iterm2"
+    "visual-studio-code"
+    "warp"
   ];
 }
