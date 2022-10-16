@@ -7,6 +7,7 @@ local keymap = vim.api.nvim_set_keymap
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -24,6 +25,11 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+
+keymap("n", "<C-S-h>", ":topleft vnew<cr>", opts)
+keymap("n", "<C-S-j>", ":botright new<cr>", opts)
+keymap("n", "<C-S-k>", ":topleft new<cr>", opts)
+keymap("n", "<C-S-l>", ":botright vnew<cr>", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
@@ -60,6 +66,3 @@ keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
-
--- Nvim Tree --
-keymap("n", "M-b", ":NvimTreeToggle<CR>", opts)
