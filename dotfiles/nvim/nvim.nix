@@ -262,5 +262,8 @@ in
     }
   ];
 
-  extraConfig = builtins.readFile ../../dotfiles/nvim/extra-config.vim;
+  /* extraConfig = builtins.readFile ../../dotfiles/nvim/extra-config.vim; */
+  extraConfig = ''
+    :luafile ~/.config/nvim/lua/init.lua
+  '';
 }

@@ -1,8 +1,16 @@
 {
   "Profiles": [
     {
-      "Use Non-ASCII Font": false,
-      "Tags": ["Dynamic"],
+      "Ansi 6 Color": {
+        "Red Component": 0.39768177270889282,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.80495297908782959,
+        "Green Component": 0.76067376136779785
+      },
+      "Tags": [
+        "Dynamic"
+      ],
       "Ansi 12 Color": {
         "Red Component": 0.44629907608032227,
         "Color Space": "sRGB",
@@ -10,14 +18,20 @@
         "Blue Component": 0.9508097767829895,
         "Green Component": 0.74439483880996704
       },
-      "Ansi 2 Color": {
-        "Red Component": 0.65606218576431274,
+      "Ansi 7 Color": {
+        "Red Component": 0.72623991966247559,
         "Color Space": "sRGB",
         "Alpha Component": 1,
-        "Blue Component": 0.54745244979858398,
-        "Green Component": 0.79839777946472168
+        "Blue Component": 0.79459840059280396,
+        "Green Component": 0.75171965360641479
       },
-      "Normal Font": "FiraCodeNerdFontCompleteM-Retina 12",
+      "Ansi 8 Color": {
+        "Red Component": 0.43546438217163086,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.51439088582992554,
+        "Green Component": 0.46512907743453979
+      },
       "Bold Color": {
         "Red Component": 0.72623991966247559,
         "Color Space": "sRGB",
@@ -25,12 +39,12 @@
         "Blue Component": 0.79459840059280396,
         "Green Component": 0.75171965360641479
       },
-      "Ansi 3 Color": {
-        "Red Component": 0.85765749216079712,
+      "Ansi 9 Color": {
+        "Red Component": 0.90961164236068726,
         "Color Space": "sRGB",
         "Alpha Component": 1,
-        "Blue Component": 0.47426080703735352,
-        "Green Component": 0.6669049859046936
+        "Blue Component": 0.53223955631256104,
+        "Green Component": 0.51200956106185913
       },
       "Allow modifyOtherKeys": true,
       "Ansi 4 Color": {
@@ -66,7 +80,12 @@
         "Green Component": 0.79839777946472168
       },
       "Ambiguous Double Width": false,
-      "Jobs to Ignore": ["rlogin", "ssh", "slogin", "telnet"],
+      "Jobs to Ignore": [
+        "rlogin",
+        "ssh",
+        "slogin",
+        "telnet"
+      ],
       "Ansi 15 Color": {
         "Red Component": 0.9999966025352478,
         "Color Space": "sRGB",
@@ -81,16 +100,16 @@
         "Blue Component": 0.79459840059280396,
         "Green Component": 0.75171965360641479
       },
-      "Working Directory": "/Users/leemhenson",
+      "Working Directory": "\/Users\/leemhenson",
       "Blinking Cursor": false,
       "Disable Window Resizing": true,
       "Sync Title": false,
       "Prompt Before Closing 2": false,
       "BM Growl": true,
-      "Mouse Reporting": true,
       "Command": "",
       "Description": "Default",
-      "Dynamic Profile Filename": "/Users/leemhenson/Library/Application Support/iTerm2/DynamicProfiles/profile.json",
+      "Dynamic Profile Filename": "\/Users\/leemhenson\/Library\/Application Support\/iTerm2\/DynamicProfiles\/profile.json",
+      "Mouse Reporting": true,
       "Screen": -1,
       "Selection Color": {
         "Red Component": 0.43546438217163086,
@@ -191,6 +210,12 @@
           "Action": 11,
           "Text": "0x1b"
         },
+        "0x50-0x120000-0x23": {
+          "Version": 1,
+          "Action": 38,
+          "Text": "\\<C-P>",
+          "Label": ""
+        },
         "0xf703-0x220000": {
           "Action": 10,
           "Text": "[1;2C"
@@ -228,6 +253,12 @@
         "0xf700-0x280000": {
           "Action": 11,
           "Text": "0x1b 0x1b 0x5b 0x41"
+        },
+        "0x62-0x100000-0xb": {
+          "Version": 1,
+          "Action": 38,
+          "Text": "\\<M-b>",
+          "Label": ""
         },
         "0x2d-0x40000": {
           "Action": 11,
@@ -347,9 +378,6 @@
         "Blue Component": 0.78104829788208008,
         "Green Component": 0.78105825185775757
       },
-      "Transparency": 0,
-      "Guid": "55971AA6-5AC2-4D86-BA17-E0D7976B85E6",
-      "Custom Directory": "Recycle",
       "Ansi 0 Color": {
         "Red Component": 0.1565571129322052,
         "Color Space": "sRGB",
@@ -357,7 +385,9 @@
         "Blue Component": 0.20312860608100891,
         "Green Component": 0.1734282374382019
       },
+      "Transparency": 0,
       "Horizontal Spacing": 1,
+      "Custom Directory": "Recycle",
       "Link Color": {
         "Red Component": 0,
         "Color Space": "sRGB",
@@ -365,40 +395,29 @@
         "Blue Component": 0.73423302173614502,
         "Green Component": 0.35916060209274292
       },
-      "Ansi 6 Color": {
-        "Red Component": 0.39768177270889282,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.80495297908782959,
-        "Green Component": 0.76067376136779785
-      },
-      "Ansi 7 Color": {
-        "Red Component": 0.72623991966247559,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.79459840059280396,
-        "Green Component": 0.75171965360641479
-      },
-      "Ansi 8 Color": {
-        "Red Component": 0.43546438217163086,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.51439088582992554,
-        "Green Component": 0.46512907743453979
-      },
-      "Ansi 9 Color": {
-        "Red Component": 0.90961164236068726,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.53223955631256104,
-        "Green Component": 0.51200956106185913
-      },
       "Ansi 1 Color": {
         "Red Component": 0.90961164236068726,
         "Color Space": "sRGB",
         "Alpha Component": 1,
         "Blue Component": 0.53223955631256104,
         "Green Component": 0.51200956106185913
+      },
+      "Use Non-ASCII Font": false,
+      "Guid": "55971AA6-5AC2-4D86-BA17-E0D7976B85E6",
+      "Normal Font": "FiraCodeNerdFontCompleteM-Retina 12",
+      "Ansi 2 Color": {
+        "Red Component": 0.65606218576431274,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.54745244979858398,
+        "Green Component": 0.79839777946472168
+      },
+      "Ansi 3 Color": {
+        "Red Component": 0.85765749216079712,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.47426080703735352,
+        "Green Component": 0.6669049859046936
       },
       "Right Option Key Sends": 0
     }
