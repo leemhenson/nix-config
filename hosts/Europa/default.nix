@@ -67,10 +67,7 @@
         enable = true;
 
         configFile."bat/config".source = ../../dotfiles/bat/config;
-        # configFile."nvim/lua" = {
-        #   source = ../../dotfiles/nvim/config;
-        #   recursive = true;
-        # };
+        configFile."lvim/config.lua".source = ../../dotfiles/lvim/config.lua;
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
       };

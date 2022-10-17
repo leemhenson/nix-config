@@ -7,6 +7,7 @@
   };
 
   brews = [
+    "gnu-sed"
     "neovim"
   ];
 
