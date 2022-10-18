@@ -88,6 +88,7 @@
           colima
           coreutils
           curl
+          docker-compose
           fd
           ffmpeg
           gawk
@@ -104,6 +105,7 @@
           readline
           ripgrep
           tldr
+          yarn
           watchman
           wget
         ];
