@@ -7,6 +7,7 @@
   };
 
   brews = [
+    "docker"
     "gnu-sed"
     "neovim"
   ];
