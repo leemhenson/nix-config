@@ -15,6 +15,7 @@
   casks = [
     "discord"
     "iterm2"
+    "react-native-debugger"
     "visual-studio-code"
     "warp"
   ];

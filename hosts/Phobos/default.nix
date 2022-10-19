@@ -104,6 +104,7 @@
           pgcli
           readline
           ripgrep
+          ruby
           tldr
           yarn
           watchman
