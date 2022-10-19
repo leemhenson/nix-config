@@ -53,7 +53,9 @@ lvim.keys.normal_mode["<C-S-l>"] = ":botright vnew<cr>";
 -- }
 
 -- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["b"]["T"] = { "<cmd>lua require('whitespace-nvim').trim()<CR>", "Trim whitespace" };
 lvim.builtin.which_key.mappings["F"] = { "<cmd>lua require('spectre').open()<CR>", "Find/Replace" }
+lvim.builtin.which_key.mappings["s"]["u"] = { "<cmd>Telescope lsp_references<CR>" };
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -63,7 +65,6 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
-lvim.builtin.which_key.mappings["b"]["T"] = { "<cmd>lua require('whitespace-nvim').trim()<CR>", "Trim whitespace" };
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
