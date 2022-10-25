@@ -57,7 +57,7 @@ pkgs: {
     BAT_PAGER = "";
     CLICOLOR = "true";
     NPM_CONFIG_USERCONFIG = "$HOME/Documents/dotfiles/npmrc";
-    PATH = "$HOME/.config/vscode/wrapper:$HOME/.config/vscode-insiders/wrapper:$HOME/.local/bin:$PATH:/opt/homebrew/bin";
+    PATH = "$HOME/.config/vscode/wrapper:$HOME/.config/vscode-insiders/wrapper:$HOME/.local/bin:$PATH:/opt/homebrew/bin:$HOME/Library/Android/sdk/platform-tools";
   };
 
   shellAliases = {
