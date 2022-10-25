@@ -37,7 +37,7 @@ pkgs: {
 
     merge = {
       renameLimit = 1000000;
-      tool = "lvimdiff3";
+      tool = "vscode";
     };
 
     mergetool = {
@@ -45,6 +45,10 @@ pkgs: {
 
       lvimdiff3 = {
         cmd = "lvim -f -d -c 'hid | hid | hid' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"";
+      };
+
+      vscode = {
+        cmd = "code --wait $MERGED";
       };
     };
 

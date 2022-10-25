@@ -7,6 +7,7 @@
   };
 
   brews = [
+    "applesimutils"
     "docker"
     "gnu-sed"
     "neovim"
@@ -18,5 +19,9 @@
     "react-native-debugger"
     "visual-studio-code"
     "warp"
+  ];
+
+  taps = [
+    "wix/brew"
   ];
 }
