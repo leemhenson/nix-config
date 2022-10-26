@@ -29,6 +29,17 @@ lvim.keys.normal_mode["<C-S-j>"] = ":botright new<cr>";
 lvim.keys.normal_mode["<C-S-k>"] = ":topleft new<cr>";
 lvim.keys.normal_mode["<C-S-l>"] = ":botright vnew<cr>";
 
+lvim.keys.normal_mode["<leader>1"] = ":BufferLineGoToBuffer 1<CR>";
+lvim.keys.normal_mode["<leader>2"] = ":BufferLineGoToBuffer 2<CR>";
+lvim.keys.normal_mode["<leader>3"] = ":BufferLineGoToBuffer 3<CR>";
+lvim.keys.normal_mode["<leader>4"] = ":BufferLineGoToBuffer 4<CR>";
+lvim.keys.normal_mode["<leader>5"] = ":BufferLineGoToBuffer 5<CR>";
+lvim.keys.normal_mode["<leader>6"] = ":BufferLineGoToBuffer 6<CR>";
+lvim.keys.normal_mode["<leader>7"] = ":BufferLineGoToBuffer 7<CR>";
+lvim.keys.normal_mode["<leader>8"] = ":BufferLineGoToBuffer 8<CR>";
+lvim.keys.normal_mode["<leader>9"] = ":BufferLineGoToBuffer 9<CR>";
+lvim.keys.normal_mode["<leader>$"] = ":BufferLineGoToBuffer -1<CR>";
+
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -70,6 +81,7 @@ lvim.builtin.which_key.mappings["t"] = {
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
+lvim.builtin.bufferline.options.numbers = "ordinal";
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
