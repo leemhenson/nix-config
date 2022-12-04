@@ -93,6 +93,7 @@
           ffmpeg
           gawk
           git-lfs
+          helix
           httpie
           imagemagick
           jdk11
