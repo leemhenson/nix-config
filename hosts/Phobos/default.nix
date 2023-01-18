@@ -104,6 +104,7 @@
           openssl
           pgcli
           readline
+          redis
           ripgrep
           ruby
           tldr
