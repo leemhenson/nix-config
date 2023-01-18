@@ -81,6 +81,7 @@
         };
 
         packages = with pkgs; [
+          awscli2
           bash
           bat
           cargo
