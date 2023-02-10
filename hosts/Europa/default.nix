@@ -98,7 +98,7 @@
           jdk11
           jq
           (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
-          nodejs
+          nodejs-slim-18_x
           openssh
           openssl
           pgcli
