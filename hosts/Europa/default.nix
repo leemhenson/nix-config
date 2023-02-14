@@ -6,6 +6,7 @@
     home = "/Users/leemhenson";
   };
 
+  documentation.enable = false;
   services.nix-daemon.enable = true; # Make sure the nix daemon always runs
   security.pam.enableSudoTouchIdAuth = true;
 
@@ -98,7 +99,7 @@
           jdk11
           jq
           (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
-          nodejs-slim-18_x
+          nodejs-slim
           openssh
           openssl
           pgcli
