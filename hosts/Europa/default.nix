@@ -87,7 +87,6 @@
           cargo
           cmake
           colima
-          coreutils
           curl
           docker-compose
           fd

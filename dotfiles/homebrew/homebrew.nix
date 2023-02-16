@@ -11,6 +11,8 @@
     "docker"
     "gnu-sed"
     "neovim"
+    "rbenv"
+    "ruby-build"
   ];
 
   casks = [
