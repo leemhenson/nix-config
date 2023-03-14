@@ -9,6 +9,7 @@
   brews = [
     "applesimutils"
     "docker"
+    "gh"
     "gnu-sed"
     "neovim"
     "rbenv"
