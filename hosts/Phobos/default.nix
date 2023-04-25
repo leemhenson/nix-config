@@ -68,6 +68,7 @@
         enable = true;
 
         configFile."bat/config".source = ../../dotfiles/bat/config;
+        configFile."lsd/config.yaml".source = ../../dotfiles/lsd/config.yaml;
         configFile."lvim/config.lua".source = ../../dotfiles/lvim/config.lua;
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
@@ -99,6 +100,7 @@
           imagemagick
           jdk11
           jq
+          lsd
           (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
           nodejs-slim
           openssh

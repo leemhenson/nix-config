@@ -65,6 +65,6 @@ pkgs: {
     gcnv = "git commit --no-verify -m ";
     gt = "git tree";
     j = "z";
-    ls = "ls -alh --color=auto";
+    ls = "lsd -al";
   };
 }
