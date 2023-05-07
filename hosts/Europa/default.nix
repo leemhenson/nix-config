@@ -84,6 +84,7 @@
         packages = with pkgs; [
           bash
           bat
+          btop
           cargo
           cmake
           colima

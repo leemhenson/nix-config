@@ -86,6 +86,7 @@
           awscli2
           bash
           bat
+          btop
           cargo
           cmake
           colima
