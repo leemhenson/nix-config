@@ -14,6 +14,7 @@
     "neovim"
     "rbenv"
     "ruby-build"
+    "typesense-server"
   ];
 
   casks = [
@@ -25,6 +26,7 @@
   ];
 
   taps = [
+    "typesense/homebrew-tap"
     "wix/brew"
   ];
 }
