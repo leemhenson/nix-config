@@ -70,7 +70,6 @@
       programs.git = import ../../dotfiles/git/git.nix pkgs;
       programs.htop.enable = true;
       programs.man.enable = true;
-      programs.neovim = import ../../dotfiles/nvim/nvim.nix pkgs;
       programs.ssh = import ../../dotfiles/ssh/ssh.nix;
       programs.zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
     };

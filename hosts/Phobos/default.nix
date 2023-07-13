@@ -127,7 +127,6 @@
         gpg.enable = true;
         htop.enable = true;
         man.enable = true;
-        # neovim = import ../../dotfiles/nvim/nvim.nix pkgs;
         ssh = import ../../dotfiles/ssh/ssh.nix;
         zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
       };

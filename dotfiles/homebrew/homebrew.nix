@@ -11,7 +11,6 @@
     "docker"
     "gh"
     "gnu-sed"
-    "neovim"
     "rbenv"
     "ruby-build"
     "typesense-server"
