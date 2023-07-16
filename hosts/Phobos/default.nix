@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   users.users.leemhenson = {
@@ -127,6 +127,9 @@
         gpg.enable = true;
         htop.enable = true;
         man.enable = true;
+        neovim = import ../../dotfiles/neovim/neovim.nix {
+          inherit pkgs lib;
+        };
         ssh = import ../../dotfiles/ssh/ssh.nix;
         zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
       };

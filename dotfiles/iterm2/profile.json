@@ -8,9 +8,7 @@
         "Blue Component": 0.80495297908782959,
         "Green Component": 0.76067376136779785
       },
-      "Tags": [
-        "Dynamic"
-      ],
+      "Tags": ["Dynamic"],
       "Ansi 12 Color": {
         "Red Component": 0.44629907608032227,
         "Color Space": "sRGB",
@@ -80,12 +78,7 @@
         "Green Component": 0.79839777946472168
       },
       "Ambiguous Double Width": false,
-      "Jobs to Ignore": [
-        "rlogin",
-        "ssh",
-        "slogin",
-        "telnet"
-      ],
+      "Jobs to Ignore": ["rlogin", "ssh", "slogin", "telnet"],
       "Ansi 15 Color": {
         "Red Component": 0.9999966025352478,
         "Color Space": "sRGB",
@@ -100,7 +93,7 @@
         "Blue Component": 0.79459840059280396,
         "Green Component": 0.75171965360641479
       },
-      "Working Directory": "\/Users\/leemhenson",
+      "Working Directory": "/Users/leemhenson",
       "Blinking Cursor": false,
       "Disable Window Resizing": true,
       "Sync Title": false,
@@ -108,7 +101,7 @@
       "BM Growl": true,
       "Command": "",
       "Description": "Default",
-      "Dynamic Profile Filename": "\/Users\/leemhenson\/Library\/Application Support\/iTerm2\/DynamicProfiles\/profile.json",
+      "Dynamic Profile Filename": "/Users/leemhenson/Library/Application Support/iTerm2/DynamicProfiles/profile.json",
       "Mouse Reporting": true,
       "Screen": -1,
       "Selection Color": {
@@ -213,7 +206,7 @@
         "0x50-0x120000-0x23": {
           "Version": 1,
           "Action": 38,
-          "Text": "\\<C-P>",
+          "Text": "\\<M-P>",
           "Label": ""
         },
         "0xf703-0x220000": {
@@ -223,7 +216,7 @@
         "0x70-0x100000-0x23": {
           "Version": 1,
           "Action": 38,
-          "Text": "\\<C-p>",
+          "Text": "\\<M-p>",
           "Label": ""
         },
         "0xf701-0x240000": {
@@ -378,33 +371,8 @@
         "Blue Component": 0.78104829788208008,
         "Green Component": 0.78105825185775757
       },
-      "Ansi 0 Color": {
-        "Red Component": 0.1565571129322052,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.20312860608100891,
-        "Green Component": 0.1734282374382019
-      },
       "Transparency": 0,
-      "Horizontal Spacing": 1,
-      "Custom Directory": "Recycle",
-      "Link Color": {
-        "Red Component": 0,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.73423302173614502,
-        "Green Component": 0.35916060209274292
-      },
-      "Ansi 1 Color": {
-        "Red Component": 0.90961164236068726,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.53223955631256104,
-        "Green Component": 0.51200956106185913
-      },
-      "Use Non-ASCII Font": false,
       "Guid": "55971AA6-5AC2-4D86-BA17-E0D7976B85E6",
-      "Normal Font": "FiraCodeNerdFontCompleteM-Retina 12",
       "Ansi 2 Color": {
         "Red Component": 0.65606218576431274,
         "Color Space": "sRGB",
@@ -419,6 +387,31 @@
         "Blue Component": 0.47426080703735352,
         "Green Component": 0.6669049859046936
       },
+      "Link Color": {
+        "Red Component": 0,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.73423302173614502,
+        "Green Component": 0.35916060209274292
+      },
+      "Ansi 0 Color": {
+        "Red Component": 0.1565571129322052,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.20312860608100891,
+        "Green Component": 0.1734282374382019
+      },
+      "Use Non-ASCII Font": false,
+      "Ansi 1 Color": {
+        "Red Component": 0.90961164236068726,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.53223955631256104,
+        "Green Component": 0.51200956106185913
+      },
+      "Normal Font": "FiraCodeNerdFontCompleteM-Retina 12",
+      "Horizontal Spacing": 1,
+      "Custom Directory": "Recycle",
       "Right Option Key Sends": 0
     }
   ]
