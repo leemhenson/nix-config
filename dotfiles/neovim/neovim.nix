@@ -32,6 +32,8 @@ in
     telescope-fzf-native-nvim
     telescope-nvim
     which-key-nvim
+
+    (fromGitHub "6ee2a9691aa345ff00907a4d5027a4ba754c8497" "master" "NeogitOrg/neogit")
     #   plenary-nvim
     #   gruvbox-material
     #   mini-nvim

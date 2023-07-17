@@ -22,7 +22,7 @@ opt.hlsearch = false                    -- Don't highlight all search matches
 opt.incsearch = true                    -- Makes search act like search in modern browsers
 opt.mouse = 'a'                         -- Enable mouse in all modes
 opt.number = true                       -- Show line numbers
-opt.scrolloff = 30                      -- Number of lines to show around cursor
+opt.scrolloff = 15                      -- Number of lines to show around cursor
 opt.shada = ''                          -- Disable shada
 opt.shadafile = 'NONE'                   -- Disable shada
 opt.shell = '/etc/profiles/per-user/leemhenson/bin/zsh'    -- Use my zsh as default in terminal
@@ -55,18 +55,45 @@ map('n', '<C-/>', ':nohl<CR>', map_opts)
 map('n', '<M-b>', ':NvimTreeToggle<CR>', map_opts)
 
 -- Telescope
+map('n', '<M-F>', ':Telescope live_grep<CR>', map_opts)
 map('n', '<M-p>', ':Telescope buffers<CR>', map_opts)
 map('n', '<M-P>', ':Telescope commands<CR>', map_opts)
-map('n', '<leader>ft', ':Telescope file_browser<CR>', map_opts)
 map('n', '<leader>ff', ':Telescope find_files<CR>', map_opts)
+map('n', '<leader>fk', ':Telescope keymaps<CR>', map_opts)
+map('n', '<leader>ft', ':Telescope file_browser<CR>', map_opts)
+
+-- Windows
+map('n', '<C-h>', '<C-w>h', map_opts)
+map('n', '<C-j>', '<C-w>j', map_opts)
+map('n', '<C-k>', '<C-w>k', map_opts)
+map('n', '<C-l>', '<C-w>l', map_opts)
+
+function move_buffer_to_vertical_split()
+  vim.cmd('wincmd L')
+  vim.cmd('execute "normal! <C-w><C-r>=bufnr(\'%\')<CR>"')
+  vim.cmd('wincmd p')
+end
+
+-- Move current buffer to new or existing right-hand window split
+map('n', '<M-C-Right>', ':lua move_buffer_to_vertical_split()<CR>', map_opts)
 
 require('nightfox').setup()
 vim.cmd [[colorscheme nordfox]]
 
 require('lualine').setup()
+require('neogit').setup()
 require("nvim-tree").setup()
 require('telescope').setup({
-  defaults = require("telescope.themes").get_ivy(),
+  defaults = require("telescope.themes").get_ivy({
+    layout_config = {
+      height = 0.6
+    },
+    pickers = {
+      colorscheme = {
+        enable_preview = true,
+      }
+    }
+  })
 })
 require('telescope').load_extension('fzf')
 require("which-key").setup()
