@@ -1,5 +1,6 @@
+local api = vim.api                     -- Access the Neovim API
 local cmd = vim.cmd                     -- Execute Vim commands
-local exec = vim.api.nvim_exec          -- Execute Vimscript
+local exec = api.nvim_exec          -- Execute Vimscript
 local fn = vim.fn                       -- Call Vim functions
 local g = vim.g                         -- Global variables
 local opt = vim.opt                     -- Global/buffer/windows-scoped options
@@ -68,14 +69,24 @@ map('n', '<C-j>', '<C-w>j', map_opts)
 map('n', '<C-k>', '<C-w>k', map_opts)
 map('n', '<C-l>', '<C-w>l', map_opts)
 
-function move_buffer_to_vertical_split()
-  vim.cmd('wincmd L')
-  vim.cmd('execute "normal! <C-w><C-r>=bufnr(\'%\')<CR>"')
-  vim.cmd('wincmd p')
+function move_buffer_to_split(direction)
+  local current_window = vim.api.nvim_call_function('winnr', {})
+  local adjacent_window = vim.api.nvim_call_function('winnr', {direction})
+
+  local message_type = "WarningMsg"  -- Use "Msg", "WarningMsg", "ErrorMsg", or "MoreMsg" for different message types
+
+  local current_buf = vim.api.nvim_get_current_buf()
+  local buf_name = vim.api.nvim_buf_get_name(current_buf)
+
+  local message = "Current window: " .. (current_window or "") .. "\nAdjacent window: " .. (adjacent_window or "") .. "\nBuffer: " .. (current_buf or "") .. "\nBuffer name: " .. (buf_name or "")
+
+  vim.api.nvim_echo({{ message, message_type }}, true, {}) -- line 85
 end
 
--- Move current buffer to new or existing right-hand window split
-map('n', '<M-C-Right>', ':lua move_buffer_to_vertical_split()<CR>', map_opts)
+map('n', '<C-D-Left>',  ':lua move_buffer_to_split(\'h\')<CR>', map_opts)
+map('n', '<C-D-Right>', ':lua move_buffer_to_split(\'l\')<CR>', map_opts)
+map('n', '<C-D-Up>',    ':lua move_buffer_to_split(\'k\')<CR>', map_opts)
+map('n', '<C-D-Down>',  ':lua move_buffer_to_split(\'j\')<CR>', map_opts)
 
 require('nightfox').setup()
 vim.cmd [[colorscheme nordfox]]

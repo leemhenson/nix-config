@@ -189,9 +189,9 @@
         },
         "0x46-0x120000-0x3": {
           "Version": 1,
+          "Label": "",
           "Action": 38,
-          "Text": "\\<M-F>",
-          "Label": ""
+          "Text": "\\<M-F>"
         },
         "0xf700-0x220000": {
           "Action": 10,
@@ -211,9 +211,9 @@
         },
         "0x50-0x120000-0x23": {
           "Version": 1,
+          "Label": "",
           "Action": 38,
-          "Text": "\\<M-P>",
-          "Label": ""
+          "Text": "\\<M-P>"
         },
         "0xf703-0x220000": {
           "Action": 10,
@@ -221,9 +221,9 @@
         },
         "0x70-0x100000-0x23": {
           "Version": 1,
+          "Label": "",
           "Action": 38,
-          "Text": "\\<M-p>",
-          "Label": ""
+          "Text": "\\<M-p>"
         },
         "0xf701-0x240000": {
           "Action": 10,
@@ -232,7 +232,7 @@
         "0xf701-0x340000-0x7d": {
           "Version": 1,
           "Action": 38,
-          "Text": "\\<M-C-Down>",
+          "Text": "\\<C-D-Down>",
           "Label": ""
         },
         "0xf70d-0x20000": {
@@ -261,9 +261,9 @@
         },
         "0x62-0x100000-0xb": {
           "Version": 1,
+          "Label": "",
           "Action": 38,
-          "Text": "\\<M-b>",
-          "Label": ""
+          "Text": "\\<M-b>"
         },
         "0x2d-0x40000": {
           "Action": 11,
@@ -280,7 +280,7 @@
         "0xf700-0x340000-0x7e": {
           "Version": 1,
           "Action": 38,
-          "Text": "\\<M-C-Up>",
+          "Text": "\\<C-D-Up>",
           "Label": ""
         },
         "0xf703-0x280000": {
@@ -298,7 +298,7 @@
         "0xf702-0x340000-0x7b": {
           "Version": 1,
           "Action": 38,
-          "Text": "\\<M-C-Left>",
+          "Text": "\\<C-D-Left>",
           "Label": ""
         },
         "0xf70a-0x20000": {
@@ -324,7 +324,7 @@
         "0xf703-0x340000-0x7c": {
           "Version": 1,
           "Action": 38,
-          "Text": "\\<M-C-Right>",
+          "Text": "\\<C-D-Right>",
           "Label": ""
         },
         "0xf702-0x280000": {
@@ -408,13 +408,7 @@
         "Blue Component": 0.20312860608100891,
         "Green Component": 0.1734282374382019
       },
-      "Ansi 1 Color": {
-        "Red Component": 0.90961164236068726,
-        "Color Space": "sRGB",
-        "Alpha Component": 1,
-        "Blue Component": 0.53223955631256104,
-        "Green Component": 0.51200956106185913
-      },
+      "Transparency": 0,
       "Horizontal Spacing": 1,
       "Custom Directory": "Recycle",
       "Link Color": {
@@ -424,10 +418,16 @@
         "Blue Component": 0.73423302173614502,
         "Green Component": 0.35916060209274292
       },
-      "Guid": "55971AA6-5AC2-4D86-BA17-E0D7976B85E6",
+      "Ansi 1 Color": {
+        "Red Component": 0.90961164236068726,
+        "Color Space": "sRGB",
+        "Alpha Component": 1,
+        "Blue Component": 0.53223955631256104,
+        "Green Component": 0.51200956106185913
+      },
       "Use Non-ASCII Font": false,
-      "Transparency": 0,
-      "Normal Font": "FiraCodeNerdFontCompleteM-Retina 12",
+      "Guid": "55971AA6-5AC2-4D86-BA17-E0D7976B85E6",
+      "Normal Font": "FiraCodeNFM-Ret 11",
       "Ansi 2 Color": {
         "Red Component": 0.65606218576431274,
         "Color Space": "sRGB",
