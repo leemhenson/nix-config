@@ -45,5 +45,3 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 if [ -f $HOME/Documents/dotfiles/private.zsh ]; then
     source $HOME/Documents/dotfiles/private.zsh
 fi
-
-eval "$(rbenv init - zsh)"

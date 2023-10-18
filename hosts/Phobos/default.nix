@@ -103,13 +103,15 @@
           jdk11
           jq
           lsd
-          (pkgs.nerdfonts.override { fonts = [
-            "FiraCode"
-            "Hack"
-            "IosevkaTerm"
-            "Monoid"
-            "Overpass"
-          ]; })
+          (pkgs.nerdfonts.override {
+            fonts = [
+              "FiraCode"
+              "Hack"
+              "IosevkaTerm"
+              "Monoid"
+              "Overpass"
+            ];
+          })
           nodejs-slim
           openssh
           openssl
@@ -117,7 +119,6 @@
           readline
           redis
           ripgrep
-          ruby
           tldr
           yarn
           watchman

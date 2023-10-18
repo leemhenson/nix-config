@@ -11,8 +11,6 @@
     "docker"
     "gh"
     "gnu-sed"
-    "rbenv"
-    "ruby-build"
   ];
 
   casks = [
