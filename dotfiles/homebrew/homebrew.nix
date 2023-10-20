@@ -11,6 +11,7 @@
     "docker"
     "gh"
     "gnu-sed"
+    "terraform"
   ];
 
   casks = [
@@ -22,6 +23,7 @@
   ];
 
   taps = [
+    "hashicorp/tap"
     "wix/brew"
   ];
 }
