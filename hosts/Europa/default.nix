@@ -69,6 +69,7 @@
 
         configFile."bat/config".source = ../../dotfiles/bat/config;
         configFile."lvim/config.lua".source = ../../dotfiles/lvim/config.lua;
+        configFile."nix/nix.conf".source = ../../dotfiles/nix/nix.conf;
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
       };
