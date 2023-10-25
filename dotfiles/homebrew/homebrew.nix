@@ -13,6 +13,7 @@
     "gh"
     "gnu-sed"
     "helm"
+    "pulumi"
     "terraform"
   ];
 
@@ -26,6 +27,7 @@
 
   taps = [
     "hashicorp/tap"
+    "pulumi/tap"
     "wix/brew"
   ];
 }
