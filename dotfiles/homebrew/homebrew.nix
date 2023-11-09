@@ -8,11 +8,9 @@
 
   brews = [
     "applesimutils"
-    "atlantis"
     "docker"
     "gh"
     "gnu-sed"
-    "helm"
     "pulumi"
     "terraform"
   ];
