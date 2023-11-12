@@ -69,20 +69,12 @@
 
         configFile."bat/config".source = ../../dotfiles/bat/config;
         configFile."helix/config.toml".source = ../../dotfiles/helix/config.toml;
-        configFile."lvim/config.lua".source = ../../dotfiles/lvim/config.lua;
         configFile."nix/nix.conf".source = ../../dotfiles/nix/nix.conf;
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
       };
 
       home = {
-        file = {
-          iterm = {
-            source = ../../dotfiles/iterm2/profile.json;
-            target = "Library/Application Support/iTerm2/DynamicProfiles/profile.json";
-          };
-        };
-
         packages = with pkgs; [
           bash
           bat
@@ -127,6 +119,7 @@
         htop.enable = true;
         man.enable = true;
         ssh = import ../../dotfiles/ssh/ssh.nix;
+        wezterm = import ../../dotfiles/wezterm/wezterm.nix;
         zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
       };
     };

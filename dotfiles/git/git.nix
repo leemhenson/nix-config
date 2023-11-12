@@ -34,6 +34,7 @@ pkgs: {
 
     fetch.prune = true;
     help.autocorrect = 1;
+    init.defaultBranch = "main";
 
     merge = {
       renameLimit = 1000000;

@@ -12,7 +12,6 @@
     "gh"
     "gnu-sed"
     "pulumi"
-    "terraform"
   ];
 
   casks = [
@@ -20,11 +19,9 @@
     "iterm2"
     "react-native-debugger"
     "visual-studio-code"
-    "warp"
   ];
 
   taps = [
-    "hashicorp/tap"
     "pulumi/tap"
     "wix/brew"
   ];
