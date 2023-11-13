@@ -2,8 +2,11 @@ local config = {}
 
 config.color_scheme = "Tokyo Night"
 
-config.font = wezterm.font({
-	family = "Fira Code",
+config.font = wezterm.font("Fira Code", {
+	italic = false,
+	stretch = "Normal",
+	style = "Normal",
+	weight = "Regular",
 })
 
 config.font_size = 13.0
@@ -36,6 +39,15 @@ config.keys = {
 		key = "]",
 		mods = "CMD",
 		action = wezterm.action.ActivatePaneDirection("Next"),
+	},
+
+	{
+		key = "k",
+		mods = "CMD",
+		action = wezterm.action.Multiple({
+			wezterm.action.ClearScrollback("ScrollbackAndViewport"),
+			wezterm.action.SendKey({ key = "L", mods = "CTRL" }),
+		}),
 	},
 }
 

@@ -16,6 +16,7 @@
 
   casks = [
     "discord"
+    "font-fira-code"
     "font-monaspace"
     "iterm2"
     "react-native-debugger"
