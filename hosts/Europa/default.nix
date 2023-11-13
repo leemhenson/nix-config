@@ -94,7 +94,6 @@
           jdk11
           jq
           lsd
-          (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
           nodejs-slim
           openssh
           openssl
