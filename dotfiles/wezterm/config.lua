@@ -1,6 +1,6 @@
 local config = {}
 
-config.color_scheme = "Tokyo Night"
+config.color_scheme = "One Dark (Gogh)"
 
 config.font = wezterm.font("Fira Code", {
 	italic = false,

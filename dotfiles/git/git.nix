@@ -28,7 +28,7 @@ pkgs: {
     };
 
     core = {
-      editor = "$HOME/.local/bin/lvim";
+      editor = "/opt/homebrew/bin/nvim";
       excludesfile = "$HOME/.config/git/ignore";
     };
 
@@ -44,8 +44,8 @@ pkgs: {
     mergetool = {
       keepBackup = false;
 
-      lvimdiff3 = {
-        cmd = "lvim -f -d -c 'hid | hid | hid' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"";
+      nvimdiff3 = {
+        cmd = "nvim -f -d -c 'hid | hid | hid' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"";
       };
 
       vscode = {
