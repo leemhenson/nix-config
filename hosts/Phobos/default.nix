@@ -75,13 +75,6 @@
       };
 
       home = {
-        file = {
-          iterm = {
-            source = ../../dotfiles/iterm2/profile.json;
-            target = "Library/Application Support/iTerm2/DynamicProfiles/profile.json";
-          };
-        };
-
         packages = with pkgs; [
           awscli2
           bash
@@ -102,15 +95,6 @@
           jdk11
           jq
           lsd
-          (pkgs.nerdfonts.override {
-            fonts = [
-              "FiraCode"
-              "Hack"
-              "IosevkaTerm"
-              "Monoid"
-              "Overpass"
-            ];
-          })
           nodejs-slim
           openssh
           openssl
@@ -134,10 +118,9 @@
         gpg.enable = true;
         htop.enable = true;
         man.enable = true;
-        neovim = import ../../dotfiles/neovim/neovim.nix {
-          inherit pkgs lib;
-        };
+        neovim.enable = true;
         ssh = import ../../dotfiles/ssh/ssh.nix;
+        wezterm = import ../../dotfiles/wezterm/wezterm.nix { pkgs = pkgs; };
         zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
       };
     };
