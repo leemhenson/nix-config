@@ -94,6 +94,7 @@
           imagemagick
           jdk11
           jq
+          libwebp
           lsd
           nodejs-slim
           openssh
