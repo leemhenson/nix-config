@@ -1,6 +1,15 @@
+local wezterm = require("wezterm")
 local config = {}
 
-config.color_scheme = "Neutron"
+local my_neutron = wezterm.color.get_builtin_schemes()["Neutron"]
+my_neutron.ansi[1] = "#6c6c6c"
+my_neutron.brights[1] = "#6c6c6c"
+
+config.color_schemes = {
+	["My Neutron"] = my_neutron,
+}
+
+config.color_scheme = "My Neutron"
 
 config.font = wezterm.font("Fira Code", {
 	italic = false,
