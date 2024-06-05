@@ -11,6 +11,7 @@
     "docker"
     "gh"
     "gnu-sed"
+    "jj"
     "pulumi"
   ];
 
