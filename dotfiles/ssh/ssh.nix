@@ -1,4 +1,5 @@
 {
+  addKeysToAgent = "yes";
   enable = true;
   matchBlocks = {
     "github.com" = {
