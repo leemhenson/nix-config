@@ -46,4 +46,7 @@ if [ -f $HOME/Documents/dotfiles/private.zsh ]; then
     source $HOME/Documents/dotfiles/private.zsh
 fi
 
+# jujutsu completion
 source <(jj util completion zsh)
+
+EDITOR=nvim
