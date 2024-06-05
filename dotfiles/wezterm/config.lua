@@ -60,4 +60,6 @@ config.keys = {
 	},
 }
 
+config.scrollback_lines = 20000
+
 return config
