@@ -4,7 +4,7 @@ pkgs: {
   };
 
   difftastic = {
-    enable = true;
+    enable = false;
   };
 
   enable = true;
@@ -30,11 +30,21 @@ pkgs: {
     core = {
       editor = "/opt/homebrew/bin/nvim";
       excludesfile = "$HOME/.config/git/ignore";
+      pager = "delta";
+    };
+
+    diff.colorMoved = "default";
+
+    delta = {
+      navigate = true;
+      line-numbers = true;
+      side-by-side = true;
     };
 
     fetch.prune = true;
     help.autocorrect = 1;
     init.defaultBranch = "main";
+    interactive.diffFilter = "delta --color-only";
 
     merge = {
       renameLimit = 1000000;

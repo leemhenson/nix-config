@@ -8,6 +8,7 @@
 
   brews = [
     "applesimutils"
+    "delta"
     "docker"
     "gh"
     "gnu-sed"
