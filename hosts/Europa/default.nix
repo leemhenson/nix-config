@@ -84,6 +84,7 @@
           colima
           curl
           docker-compose
+          exiftool
           fd
           ffmpeg
           gawk
