@@ -21,6 +21,7 @@
     "font-fira-code"
     "font-monaspace"
     "iterm2"
+    "ngrok"
     "react-native-debugger"
     "visual-studio-code"
   ];
