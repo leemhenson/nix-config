@@ -12,6 +12,7 @@
     "docker"
     "gh"
     "gnu-sed"
+    "hl"
     "jj"
     "pulumi"
   ];
@@ -28,6 +29,7 @@
 
   taps = [
     "homebrew/cask-fonts"
+    "pamburus/tap"
     "pulumi/tap"
     "wix/brew"
   ];
