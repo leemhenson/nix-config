@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   users.users.leemhenson = {
@@ -68,7 +68,7 @@
         enable = true;
 
         configFile."bat/config".source = ../../dotfiles/bat/config;
-        configFile."lsd/config.yaml".source = ../../dotfiles/lsd/config.yaml;
+        configFile."helix/config.toml".source = ../../dotfiles/helix/config.toml;
         configFile."nix/nix.conf".source = ../../dotfiles/nix/nix.conf;
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
@@ -76,7 +76,6 @@
 
       home = {
         packages = with pkgs; [
-          awscli2
           bash
           bat
           btop
@@ -101,8 +100,8 @@
           openssl
           pgcli
           readline
-          redis
           ripgrep
+          ruby
           tldr
           yarn
           watchman
@@ -119,7 +118,6 @@
         gpg.enable = true;
         htop.enable = true;
         man.enable = true;
-        neovim.enable = true;
         ssh = import ../../dotfiles/ssh/ssh.nix;
         wezterm = import ../../dotfiles/wezterm/wezterm.nix { pkgs = pkgs; };
         zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
