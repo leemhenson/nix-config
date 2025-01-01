@@ -21,6 +21,7 @@
     "discord"
     "font-fira-code"
     "font-monaspace"
+    "ghostty"
     "iterm2"
     "ngrok"
     "react-native-debugger"
