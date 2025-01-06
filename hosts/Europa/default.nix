@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  unstablePkgs = import <nixpkgs-unstable> {}; # Importing the unstable channel
+in
 {
   users.users.leemhenson = {
     name = "leemhenson";
@@ -89,7 +92,7 @@
           ffmpeg
           gawk
           git-lfs
-          helix
+          unstablePkgs.helix
           httpie
           imagemagick
           jdk11
