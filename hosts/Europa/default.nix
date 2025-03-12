@@ -40,6 +40,8 @@ in
       enableKeyMapping = true;
       remapCapsLockToControl = true;
     };
+
+    stateVersion = 5;
   };
 
   homebrew = import ../../dotfiles/homebrew/homebrew.nix;
@@ -95,7 +97,7 @@ in
           unstablePkgs.helix
           httpie
           imagemagick
-          jdk11
+          jdk17
           jq
           libwebp
           lsd
