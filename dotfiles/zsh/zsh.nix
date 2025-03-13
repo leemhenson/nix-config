@@ -17,7 +17,7 @@ pkgs: {
   oh-my-zsh = {
     enable = true;
     extraConfig = builtins.readFile ./oh-my-zsh-extra.zsh;
-    plugins = [ "1password" "colored-man-pages" "git" "httpie" "ripgrep" "z" ];
+    plugins = [ "1password" "colored-man-pages" "git" "httpie" "z" ];
     theme = "flazz";
   };
 
