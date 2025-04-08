@@ -37,6 +37,8 @@
       enableKeyMapping = true;
       remapCapsLockToControl = true;
     };
+
+    stateVersion = 5;
   };
 
   homebrew = import ../../dotfiles/homebrew/homebrew.nix;
@@ -88,10 +90,9 @@
           ffmpeg
           gawk
           git-lfs
-          helix
           httpie
           imagemagick
-          jdk11
+          jdk17
           jq
           libwebp
           lsd
