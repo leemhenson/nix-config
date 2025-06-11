@@ -10,8 +10,7 @@ in
   };
 
   documentation.enable = false;
-  services.nix-daemon.enable = true; # Make sure the nix daemon always runs
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   system = {
     defaults = {
@@ -41,6 +40,7 @@ in
       remapCapsLockToControl = true;
     };
 
+    primaryUser = "leemhenson";
     stateVersion = 5;
   };
 
