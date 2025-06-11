@@ -12,7 +12,7 @@ pkgs: {
     size = 100000;
   };
 
-  initExtra = builtins.readFile ./init-extra.zsh;
+  initContent = builtins.readFile ./init-extra.zsh;
 
   oh-my-zsh = {
     enable = true;

@@ -9,6 +9,7 @@ in
     home = "/Users/leemhenson";
   };
 
+  ids.gids.nixbld = 30000;
   documentation.enable = false;
   security.pam.services.sudo_local.touchIdAuth = true;
 
@@ -65,9 +66,6 @@ in
 
     users.leemhenson = { pkgs, ... }: {
       fonts.fontconfig.enable = true;
-
-      nixpkgs.config.allowBroken = true;
-      nixpkgs.config.allowUnfree = true;
 
       xdg = {
         enable = true;
