@@ -13,7 +13,6 @@
     "gh"
     "gnu-sed"
     "hl"
-    "jj"
     "pulumi"
   ];
 
