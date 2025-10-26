@@ -37,6 +37,9 @@
       enableKeyMapping = true;
       remapCapsLockToControl = true;
     };
+
+    primaryUser = "leemhenson";
+    stateVersion = 5;
   };
 
   homebrew = import ../../dotfiles/homebrew/homebrew.nix;
