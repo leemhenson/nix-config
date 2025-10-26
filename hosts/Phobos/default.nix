@@ -6,9 +6,9 @@
     home = "/Users/leemhenson";
   };
 
+  ids.gids.nixbld = 30000;
   documentation.enable = false;
-  services.nix-daemon.enable = true; # Make sure the nix daemon always runs
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   system = {
     defaults = {
