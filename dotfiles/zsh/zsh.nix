@@ -64,7 +64,7 @@ pkgs: {
   shellAliases = {
     awk = "gawk";
     gcnv = "git commit --no-verify -m ";
-    gt = "git tree";
+    gt = "serie";
     j = "z";
     ls = "lsd -al";
   };

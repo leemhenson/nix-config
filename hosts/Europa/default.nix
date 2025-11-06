@@ -106,6 +106,7 @@ in
           readline
           ripgrep
           ruby
+          serie
           tldr
           yarn
           watchman
