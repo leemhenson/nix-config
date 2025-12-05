@@ -75,6 +75,8 @@ in
         configFile."nix/nix.conf".source = ../../dotfiles/nix/nix.conf;
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
+        configFile."zed/keymap.json".source = ../../dotfiles/zed/keymap.json;
+        configFile."zed/settings.json".source = ../../dotfiles/zed/settings.json;
       };
 
       home = {

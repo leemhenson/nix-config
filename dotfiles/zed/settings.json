@@ -1,0 +1,110 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+	"agent": {
+		"default_model": {
+			"provider": "copilot_chat",
+			"model": "gpt-4.1"
+		},
+		"model_parameters": []
+	},
+	"colorize_brackets": true,
+	"buffer_font_family": "Fira Code",
+	"buffer_font_size": 12,
+	"experimental.theme_overrides": {
+		"syntax": {
+			"type": {
+				"color": "#ffe0cc"
+			}
+		}
+	},
+	"features": {
+		"edit_prediction_provider": "copilot"
+	},
+	"icon_theme": "Catppuccin Mocha",
+	"languages": {
+		"JavaScript": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"TypeScript": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"TSX": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"JSON": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"JSONC": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		},
+		"CSS": {
+			"formatter": { "language_server": { "name": "biome" } },
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			}
+		}
+	},
+	"lsp": {
+		"tailwindcss-language-server": {
+			"settings": {
+				"classAttributes": [
+					"class",
+					"className",
+					"containerStyle",
+					"contentContainerStyle",
+					"contentStyle",
+					"iconClassName",
+					"ngClass",
+					"style",
+					"titleClassName"
+				],
+				"classFunctions": ["cva", "cx", "tw", "tw\\.[a-z-]+"],
+				"experimental": {
+					"classRegex": ["[cls|className]\\s\\:\\=\\s\"([^\"]*)"],
+					"configFile": "/Users/leemhenson/src/mosaic/products/social-anxiety/native-app/src/theme/tailwind.config.js"
+				},
+				"validate": true
+			}
+		}
+	},
+	"tabs": {
+		"file_icons": true,
+		"show_diagnostics": "errors"
+	},
+	"telemetry": {
+		"diagnostics": false,
+		"metrics": false
+	},
+	"theme": "Jellybeans",
+	"ui_font_size": 13,
+	"ui_font_family": "Fira Code",
+	"vim_mode": true
+}
