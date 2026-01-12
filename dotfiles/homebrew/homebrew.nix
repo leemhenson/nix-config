@@ -17,6 +17,7 @@
   ];
 
   casks = [
+    "claude-code"
     "discord"
     "font-fira-code"
     "font-monaspace"
