@@ -13,6 +13,7 @@
     "gh"
     "gnu-sed"
     "hl"
+    "mobile-dev-inc/tap/maestro"
     "pulumi"
   ];
 
@@ -32,6 +33,7 @@
   taps = [
     "bysiber/cleardisk"
     "homebrew/cask-fonts"
+    "mobile-dev-inc/tap"
     "pamburus/tap"
     "pulumi/tap"
     "wix/brew"
