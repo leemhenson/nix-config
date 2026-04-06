@@ -14,6 +14,7 @@
     "gnu-sed"
     "hl"
     "mobile-dev-inc/tap/maestro"
+    "neovim"
     "pulumi"
   ];
 
