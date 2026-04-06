@@ -73,6 +73,7 @@ in
         configFile."bat/config".source = ../../dotfiles/bat/config;
         configFile."helix/config.toml".source = ../../dotfiles/helix/config.toml;
         configFile."nix/nix.conf".source = ../../dotfiles/nix/nix.conf;
+        configFile."nvim/init.lua".source = ../../dotfiles/nvim/init.lua;
         configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
         configFile."vscode-insiders/wrapper/code-insiders".source = ../../dotfiles/vscode-insiders/wrapper/code;
         configFile."zed/keymap.json".source = ../../dotfiles/zed/keymap.json;
@@ -101,7 +102,13 @@ in
           jq
           libwebp
           lsd
+          lua-language-server # needed for lua language server in nvim
+          nil # needed for nix language server in neovim
+          tree-sitter             # needed by nvim-treesitter to compile parsers
           nodejs-slim
+          nodePackages.typescript-language-server
+          vscode-langservers-extracted  # provides vscode-eslint-language-server
+          nodePackages."@tailwindcss/language-server"
           openssh
           openssl
           pgcli

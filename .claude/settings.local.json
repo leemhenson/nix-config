@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:echasnovski.com)",
+      "WebFetch(domain:briandouglas.ie)",
+      "WebFetch(domain:jdhao.github.io)",
+      "WebFetch(domain:neovim.io)",
+      "Read(//Users/leemhenson/.local/share/nvim/site/pack/core/opt/**)",
+      "Read(//Users/leemhenson/.local/share/nvim/site/pack/**)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}
