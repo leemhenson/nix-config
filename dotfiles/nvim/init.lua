@@ -44,6 +44,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
 local plugins = {
   "https://github.com/Aejkatappaja/sora",
+  "https://github.com/WTFox/jellybeans.nvim",
   "https://github.com/nvim-lua/plenary.nvim",                        -- required by telescope + neogit
   "https://github.com/nvim-telescope/telescope.nvim",
   "https://github.com/nvim-telescope/telescope-fzf-native.nvim",     -- compiled fzf sorter for telescope
@@ -56,12 +57,13 @@ local plugins = {
   "https://github.com/folke/which-key.nvim",
   "https://github.com/folke/flash.nvim",
   "https://github.com/folke/trouble.nvim",
-  "https://github.com/kylechui/nvim-surround",
   "https://github.com/folke/ts-comments.nvim",
   "https://github.com/folke/todo-comments.nvim",
   "https://github.com/stevearc/conform.nvim",
   "https://github.com/mfussenegger/nvim-lint",
   "https://github.com/windwp/nvim-ts-autotag",
+  "https://github.com/akinsho/bufferline.nvim",
+  "https://github.com/folke/persistence.nvim",
 
 }
 
@@ -161,6 +163,16 @@ map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit" })
 map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end,  { desc = "Next diagnostic" })
 map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Prev diagnostic" })
 
+-- Persistence
+map("n", "<leader>qs", function() require("persistence").load() end,                { desc = "Restore session" })
+map("n", "<leader>ql", function() require("persistence").load({ last = true }) end, { desc = "Restore last session" })
+map("n", "<leader>qd", function() require("persistence").stop() end,                { desc = "Don't save session" })
+
+-- Bufferline
+map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+map("n", "<leader>bd", "<cmd>bdelete<cr>",      { desc = "Delete buffer" })
+
 -- Trouble
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                          { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",             { desc = "Buffer diagnostics (Trouble)" })
@@ -196,7 +208,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Colorscheme
 require("sora").setup()
-vim.cmd("colorscheme sora")
+require("jellybeans").setup({})
+vim.cmd("colorscheme jellybeans")
 
 -- Treesitter
 -- nvim-treesitter v1.x removed the configs module; highlighting is via built-in vim.treesitter.
@@ -254,6 +267,17 @@ require("gitsigns").setup({
 -- Neogit
 require("neogit").setup({})
 
+-- persistence.nvim — auto-saves and restores sessions per directory
+require("persistence").setup()
+
+-- bufferline.nvim — buffer tabs; must be set up after the colorscheme
+require("bufferline").setup({
+  options = {
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+  },
+})
+
 -- mini.icons — replaces nvim-web-devicons; mock call keeps plugins that require it working
 require("mini.icons").setup()
 MiniIcons.mock_nvim_web_devicons()
@@ -310,8 +334,8 @@ require("ts-comments").setup()
 -- nvim-ts-autotag — auto-close and auto-rename HTML/JSX tags via treesitter
 require("nvim-ts-autotag").setup()
 
--- nvim-surround — ys/ds/cs to add, delete, change surroundings; defaults are fine
-require("nvim-surround").setup()
+-- mini.surround — sa/sd/sr to add, delete, replace surroundings
+require("mini.surround").setup()
 
 -- flash.nvim — no setup needed beyond keymaps; defaults are fine
 ---@diagnostic disable-next-line: missing-fields
