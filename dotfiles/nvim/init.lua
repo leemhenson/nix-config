@@ -55,6 +55,8 @@ vim.pack.add({
   "https://github.com/nvim-treesitter/nvim-treesitter",
   "https://github.com/folke/which-key.nvim",
   "https://github.com/folke/flash.nvim",
+  "https://github.com/folke/trouble.nvim",
+  "https://github.com/nvim-tree/nvim-web-devicons",
 })
 
 -- vim.pack stores plugins in pack/core/opt/ — packadd each one so require() calls below work
@@ -71,6 +73,8 @@ local plugins = {
   "nvim-treesitter",
   "which-key.nvim",
   "flash.nvim",
+  "trouble.nvim",
+  "nvim-web-devicons",
 }
 for _, name in ipairs(plugins) do
   vim.cmd("packadd " .. name)
@@ -164,6 +168,14 @@ map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit" })
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
 
+-- Trouble
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                          { desc = "Diagnostics (Trouble)" })
+map("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",             { desc = "Buffer diagnostics (Trouble)" })
+map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",                  { desc = "Symbols (Trouble)" })
+map("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",   { desc = "LSP definitions/refs (Trouble)" })
+map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                               { desc = "Quickfix list (Trouble)" })
+map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                              { desc = "Location list (Trouble)" })
+
 -- LSP keymaps — only active when an LSP is attached to the buffer
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
@@ -256,7 +268,11 @@ require("mini.statusline").setup()
 -- which-key — shows popup of available keymaps after pressing a prefix
 require("which-key").setup()
 
+-- trouble.nvim — pretty list for diagnostics, references, quickfix, location list
+require("trouble").setup()
+
 -- flash.nvim — no setup needed beyond keymaps; defaults are fine
+---@diagnostic disable-next-line: missing-fields
 require("flash").setup({
   modes = {
     search = {
