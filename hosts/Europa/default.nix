@@ -109,6 +109,9 @@ in
           nodePackages.typescript-language-server
           vscode-langservers-extracted  # provides vscode-eslint-language-server
           nodePackages."@tailwindcss/language-server"
+          stylua                                        # formatter for Lua
+          nixfmt-rfc-style                              # formatter for Nix
+          sqlfluff                                      # formatter/linter for SQL
           openssh
           openssl
           pgcli

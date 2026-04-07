@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
-vim.pack.add({
+local plugins = {
   "https://github.com/Aejkatappaja/sora",
   "https://github.com/nvim-lua/plenary.nvim",                        -- required by telescope + neogit
   "https://github.com/nvim-telescope/telescope.nvim",
@@ -56,28 +56,19 @@ vim.pack.add({
   "https://github.com/folke/which-key.nvim",
   "https://github.com/folke/flash.nvim",
   "https://github.com/folke/trouble.nvim",
-  "https://github.com/nvim-tree/nvim-web-devicons",
-})
+  "https://github.com/kylechui/nvim-surround",
+  "https://github.com/folke/ts-comments.nvim",
+  "https://github.com/folke/todo-comments.nvim",
+  "https://github.com/stevearc/conform.nvim",
+  "https://github.com/mfussenegger/nvim-lint",
+  "https://github.com/windwp/nvim-ts-autotag",
+
+}
 
 -- vim.pack stores plugins in pack/core/opt/ — packadd each one so require() calls below work
-local plugins = {
-  "sora",
-  "plenary.nvim",
-  "telescope.nvim",
-  "telescope-fzf-native.nvim",
-  "blink.cmp",
-  "oil.nvim",
-  "neogit",
-  "gitsigns.nvim",
-  "mini.nvim",
-  "nvim-treesitter",
-  "which-key.nvim",
-  "flash.nvim",
-  "trouble.nvim",
-  "nvim-web-devicons",
-}
-for _, name in ipairs(plugins) do
-  vim.cmd("packadd " .. name)
+vim.pack.add(plugins)
+for _, url in ipairs(plugins) do
+  vim.cmd("packadd " .. url:match("([^/]+)$"))
 end
 
 -- =============================================================================
@@ -153,6 +144,8 @@ map("n", "<leader>fs", tel.lsp_document_symbols,    { desc = "Document symbols" 
 map("n", "<leader>fS", tel.lsp_workspace_symbols,   { desc = "Workspace symbols" })
 map("n", "<leader>fd", tel.diagnostics,             { desc = "Diagnostics" })
 map("n", "<leader>fk", tel.keymaps,                 { desc = "Keymaps" })
+map("n", "<leader>fc", tel.commands,                { desc = "Commands" })
+map("n", "<leader>ft", "<cmd>TodoTelescope<cr>",    { desc = "Todo comments" })
 
 -- Flash
 map({ "n", "x", "o" }, "s", function() require("flash").jump() end,   { desc = "Flash jump" })
@@ -165,8 +158,8 @@ map("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
 map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit" })
 
 -- Diagnostics
-map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
+map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end,  { desc = "Next diagnostic" })
+map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Prev diagnostic" })
 
 -- Trouble
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                          { desc = "Diagnostics (Trouble)" })
@@ -193,7 +186,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "K",          vim.lsp.buf.hover,        vim.tbl_extend("force", opts, { desc = "Hover docs" }))
     map("n", "<leader>rn", vim.lsp.buf.rename,       vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
     map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code action" }))
-    map("n", "<leader>cf", vim.lsp.buf.format,       vim.tbl_extend("force", opts, { desc = "Format buffer" }))
+    map("n", "<leader>cf", function() require("conform").format({ async = true, lsp_fallback = true }) end, vim.tbl_extend("force", opts, { desc = "Format buffer" }))
   end,
 })
 
@@ -250,17 +243,23 @@ require("gitsigns").setup({
     local function bmap(mode, lhs, rhs, desc)
       map(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
-    bmap("n", "]h",         gs.next_hunk,        "Next hunk")
-    bmap("n", "[h",         gs.prev_hunk,        "Prev hunk")
-    bmap("n", "<leader>hs", gs.stage_hunk,       "Stage hunk")
-    bmap("n", "<leader>hu", gs.undo_stage_hunk,  "Undo stage hunk")
-    bmap("n", "<leader>hp", gs.preview_hunk,     "Preview hunk")
-    bmap("n", "<leader>hb", gs.blame_line,       "Blame line")
+    bmap("n", "]h",         function() gs.nav_hunk("next") end, "Next hunk")
+    bmap("n", "[h",         function() gs.nav_hunk("prev") end, "Prev hunk")
+    bmap("n", "<leader>hs", gs.stage_hunk,                     "Stage hunk")
+    bmap("n", "<leader>hp", gs.preview_hunk,                   "Preview hunk")
+    bmap("n", "<leader>hb", gs.blame_line,                     "Blame line")
   end,
 })
 
 -- Neogit
-require("neogit").setup()
+require("neogit").setup({})
+
+-- mini.icons — replaces nvim-web-devicons; mock call keeps plugins that require it working
+require("mini.icons").setup()
+MiniIcons.mock_nvim_web_devicons()
+
+-- mini.pairs — auto-close brackets, quotes, etc.
+require("mini.pairs").setup()
 
 -- mini.statusline
 require("mini.statusline").setup()
@@ -270,6 +269,49 @@ require("which-key").setup()
 
 -- trouble.nvim — pretty list for diagnostics, references, quickfix, location list
 require("trouble").setup()
+
+-- nvim-lint — sqlfluff for SQL (all other filetypes are covered by LSPs)
+local lint = require("lint")
+lint.linters_by_ft = { sql = { "sqlfluff" } }
+lint.linters.sqlfluff.args = { "lint", "--format", "json", "--dialect", "postgres" }
+vim.api.nvim_create_autocmd("BufWritePost", { callback = function() lint.try_lint() end })
+vim.api.nvim_create_autocmd("BufReadPost",  { callback = function() lint.try_lint() end })
+
+-- conform.nvim — formatting with format-on-save
+require("conform").setup({
+  formatters_by_ft = {
+    javascript      = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescript      = { "prettier" },
+    typescriptreact = { "prettier" },
+    css             = { "prettier" },
+    html            = { "prettier" },
+    json            = { "prettier" },
+    lua             = { "stylua" },
+    nix             = { "nixfmt" },
+    sql             = { "sqlfluff" },
+  },
+  formatters = {
+    sqlfluff = { args = { "format", "--dialect", "postgres", "-" }, require_cwd = false },
+  },
+  format_on_save = {
+    timeout_ms = 500,
+    lsp_fallback = true,
+  },
+})
+
+-- todo-comments.nvim — highlight and search TODO/FIXME/HACK/NOTE etc.
+require("todo-comments").setup()
+
+-- ts-comments.nvim — extends built-in gcc/gc commenting with treesitter-aware comment strings
+-- handles embedded languages correctly (e.g. JSX uses {/* */} not //)
+require("ts-comments").setup()
+
+-- nvim-ts-autotag — auto-close and auto-rename HTML/JSX tags via treesitter
+require("nvim-ts-autotag").setup()
+
+-- nvim-surround — ys/ds/cs to add, delete, change surroundings; defaults are fine
+require("nvim-surround").setup()
 
 -- flash.nvim — no setup needed beyond keymaps; defaults are fine
 ---@diagnostic disable-next-line: missing-fields
