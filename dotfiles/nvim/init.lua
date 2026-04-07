@@ -257,4 +257,10 @@ require("mini.statusline").setup()
 require("which-key").setup()
 
 -- flash.nvim — no setup needed beyond keymaps; defaults are fine
-require("flash")
+require("flash").setup({
+  modes = {
+    search = {
+      enabled = true
+    }
+  }
+})
