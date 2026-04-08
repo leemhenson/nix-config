@@ -81,6 +81,10 @@ in
       };
 
       home = {
+        file = {
+          ".claude/skills".source = ../../dotfiles/claude/skills;
+        };
+
         packages = with pkgs; [
           bash
           bat
