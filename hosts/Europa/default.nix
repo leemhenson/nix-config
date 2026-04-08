@@ -81,9 +81,10 @@ in
       };
 
       home = {
-        file = {
-          ".claude/skills".source = ../../dotfiles/claude/skills;
-        };
+        file = pkgs.lib.mapAttrs' (name: _: {
+          name = ".claude/skills/${name}";
+          value = { source = ../../dotfiles/claude/skills + "/${name}"; };
+        }) (builtins.readDir ../../dotfiles/claude/skills);
 
         packages = with pkgs; [
           bash
