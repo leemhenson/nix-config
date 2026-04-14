@@ -20,7 +20,6 @@
 
   casks = [
     "claude-code"
-    "cleardisk"
     "discord"
     "font-fira-code"
     "font-monaspace"
@@ -32,7 +31,6 @@
   ];
 
   taps = [
-    "bysiber/cleardisk"
     "homebrew/cask-fonts"
     "mobile-dev-inc/tap"
     "pamburus/tap"

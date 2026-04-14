@@ -1,8 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, unstablePkgs, ... }:
 
-let
-  unstablePkgs = import <nixpkgs-unstable> {}; # Importing the unstable channel
-in
 {
   users.users.leemhenson = {
     name = "leemhenson";

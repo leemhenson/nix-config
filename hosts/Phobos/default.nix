@@ -1,8 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, unstablePkgs, ... }:
 
-let
-  unstablePkgs = import <nixpkgs-unstable> {}; # Importing the unstable channel
-in
 {
   users.users.leemhenson = {
     name = "leemhenson";
@@ -10,6 +7,7 @@ in
   };
 
   ids.gids.nixbld = 30000;
+  nix.enable = false;
   documentation.enable = false;
   security.pam.services.sudo_local.touchIdAuth = true;
 
@@ -63,6 +61,7 @@ in
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "backup";
 
     users.leemhenson = { pkgs, ... }: {
       fonts.fontconfig.enable = true;

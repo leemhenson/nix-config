@@ -9,7 +9,16 @@
       "Read(//Users/leemhenson/.local/share/nvim/site/pack/core/opt/**)",
       "Read(//Users/leemhenson/.local/share/nvim/site/pack/**)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(nix --version)",
+      "Read(//nix/store/vl8lfh5xax5hmb1qsfaafawnx6jkqy0c-determinate-nix-3.17.3/bin/**)",
+      "Read(//run/**)",
+      "Read(//Users/leemhenson/.nix-profile/bin/**)",
+      "Bash(nix show-config:*)",
+      "Bash(nix flake:*)",
+      "Bash(nix build:*)",
+      "Bash(./result/sw/bin/darwin-rebuild switch:*)",
+      "Bash(sudo ./result/sw/bin/darwin-rebuild switch --flake .)"
     ]
   }
 }
