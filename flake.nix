@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # nix will normally use the nixpkgs defined in home-managers inputs, we only want one copy of nixpkgs though
@@ -11,7 +12,7 @@
   };
 
   # add the inputs declared above to the argument attribute set
-  outputs = { self, nixpkgs, home-manager, darwin }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin }: {
     darwinConfigurations."Deimos" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [
@@ -22,6 +23,9 @@
 
     darwinConfigurations."Europa" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
+      specialArgs = {
+        unstablePkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+      };
       modules = [
         home-manager.darwinModules.home-manager
         ./hosts/Europa/default.nix
@@ -30,6 +34,9 @@
 
     darwinConfigurations."Phobos" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
+      specialArgs = {
+        unstablePkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+      };
       modules = [
         home-manager.darwinModules.home-manager
         ./hosts/Phobos/default.nix
