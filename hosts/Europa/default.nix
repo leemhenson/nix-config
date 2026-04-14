@@ -100,7 +100,6 @@ in
           ffmpeg
           gawk
           git-lfs
-          unstablePkgs.helix
           httpie
           imagemagick
           jdk17
@@ -109,14 +108,10 @@ in
           lsd
           lua-language-server # needed for lua language server in nvim
           nil # needed for nix language server in neovim
-          tree-sitter             # needed by nvim-treesitter to compile parsers
-          nodejs-slim
-          nodePackages.typescript-language-server
-          vscode-langservers-extracted  # provides vscode-eslint-language-server
-          nodePackages."@tailwindcss/language-server"
-          stylua                                        # formatter for Lua
           nixfmt-rfc-style                              # formatter for Nix
-          sqlfluff                                      # formatter/linter for SQL
+          nodejs-slim
+          nodePackages."@tailwindcss/language-server"
+          nodePackages.typescript-language-server
           openssh
           openssl
           pgcli
@@ -124,10 +119,15 @@ in
           ripgrep
           ruby
           serie
+          sqlfluff                                      # formatter/linter for SQL
+          stylua                                        # formatter for Lua
           tldr
-          yarn
+          tree-sitter             # needed by nvim-treesitter to compile parsers
+          unstablePkgs.helix
+          vscode-langservers-extracted  # provides vscode-eslint-language-server
           watchman
           wget
+          yarn
         ];
 
         stateVersion = "22.05";
