@@ -25,6 +25,7 @@
     "font-fira-code"
     "font-monaspace"
     "ghostty"
+    "google-cloud-sdk"
     "iterm2"
     "ngrok"
     "react-native-debugger"
