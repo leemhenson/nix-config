@@ -16,6 +16,7 @@
     "mobile-dev-inc/tap/maestro"
     "neovim"
     "pulumi"
+    "unison-language"
   ];
 
   casks = [
@@ -38,6 +39,7 @@
     "mobile-dev-inc/tap"
     "pamburus/tap"
     "pulumi/tap"
+    "unisonweb/unison"
     "wix/brew"
   ];
 }
