@@ -95,6 +95,7 @@ in
           colima
           curl
           docker-compose
+          exercism
           exiftool
           fd
           ffmpeg
