@@ -140,7 +140,6 @@
         htop.enable = true;
         man.enable = true;
         ssh = import ../../dotfiles/ssh/ssh.nix;
-        wezterm = import ../../dotfiles/wezterm/wezterm.nix { pkgs = pkgs; };
         zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
       };
     };
