@@ -1,15 +1,27 @@
 pkgs: {
-  aliases = {
-    tree = "log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order";
-  };
-
-  difftastic = {
-    enable = false;
-  };
-
   enable = true;
 
-  extraConfig = {
+  ignores = [
+    "*~"
+    ''\#*\#''
+    ''\.#*''
+    ".DS_Store"
+    "/.dir-locals.el"
+    "/.envrc"
+    "/.vscode"
+    "/npm-debug.log*"
+    "/tags"
+    "/tags.lock"
+    "/tags.temp"
+    "/vendor"
+    "/yarn-error.log"
+  ];
+
+  settings = {
+    aliases = {
+      tree = "log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order";
+    };
+
     apply.whitespace = "nowarn";
 
     color = {
@@ -65,29 +77,15 @@ pkgs: {
 
     pull.rebase = true;
     push.default = "current";
-  };
 
-  ignores = [
-    "*~"
-    ''\#*\#''
-    ''\.#*''
-    ".DS_Store"
-    "/.dir-locals.el"
-    "/.envrc"
-    "/.vscode"
-    "/npm-debug.log*"
-    "/tags"
-    "/tags.lock"
-    "/tags.temp"
-    "/vendor"
-    "/yarn-error.log"
-  ];
+    user = {
+      email = "lee.m.henson@gmail.com";
+      name = "Lee Henson";
+    };
+  };
 
   signing = {
     key = "B1EA4611F4564B0C487DF4B44CC045383A6DCF55";
     signByDefault = true;
   };
-
-  userEmail = "lee.m.henson@gmail.com";
-  userName = "Lee Henson";
 }

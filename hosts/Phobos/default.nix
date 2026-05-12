@@ -11,6 +11,11 @@
   documentation.enable = false;
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "lima-full-1.2.2"
+    "lima-additional-guestagents-1.2.2"
+  ];
+
   system = {
     defaults = {
       NSGlobalDomain = {
@@ -127,12 +132,14 @@
           watchman
           wget
           yarn
+          zig
         ];
 
         stateVersion = "22.05";
       };
 
       programs = {
+        difftastic = import ../../dotfiles/difftastic/difftastic.nix;
         direnv = import ../../dotfiles/direnv/direnv.nix;
         fzf = import ../../dotfiles/fzf/fzf.nix;
         git = import ../../dotfiles/git/git.nix pkgs;
