@@ -170,6 +170,10 @@ end, { desc = "Flash treesitter" })
 -- Oil
 map("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
 
+-- Windows
+map("n", "<leader>wv", "<C-w>v", { desc = "Split vertical" })
+map("n", "<leader>ws", "<C-w>s", { desc = "Split horizontal" })
+
 -- Neogit
 map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit" })
 
@@ -204,7 +208,7 @@ map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "
 map(
 	"n",
 	"<leader>xl",
-	"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+	"<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>",
 	{ desc = "LSP definitions/refs (Trouble)" }
 )
 map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix list (Trouble)" })
@@ -251,18 +255,7 @@ vim.cmd("colorscheme jellybeans")
 -- nvim-treesitter v1.x removed the configs module; highlighting is via built-in vim.treesitter.
 -- Install parsers once with :TSInstall typescript tsx javascript css html sql lua nix
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = {
-		"typescript",
-		"typescriptreact",
-		"javascript",
-		"javascriptreact",
-		"css",
-		"html",
-		"sql",
-		"lua",
-		"nix",
-		"markdown",
-	},
+	pattern = "*",
 	callback = function(ev)
 		pcall(vim.treesitter.start, ev.buf) -- pcall: silently skip if parser not yet installed
 	end,
@@ -395,7 +388,21 @@ require("todo-comments").setup()
 require("ts-comments").setup()
 
 -- nvim-ts-autotag — auto-close and auto-rename HTML/JSX tags via treesitter
+-- Disable for pager buffers: they have no treesitter parser and nvim-ts-autotag
+-- crashes on InsertLeave (nil parser) when it erroneously attaches to them
 require("nvim-ts-autotag").setup()
+-- nvim-ts-autotag doesn't nil-check the parser before indexing it, so it crashes
+-- on InsertLeave for buffers without a treesitter parser (e.g. pager, help, qf).
+-- vim.schedule defers until after all FileType handlers run, so we clear the
+-- InsertLeave autocmd nvim-ts-autotag already registered for that buffer.
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "pager", "help", "qf", "nofile" },
+	callback = function(ev)
+		vim.schedule(function()
+			vim.api.nvim_clear_autocmds({ event = "InsertLeave", buffer = ev.buf })
+		end)
+	end,
+})
 
 -- mini.surround — sa/sd/sr to add, delete, replace surroundings
 require("mini.surround").setup()
