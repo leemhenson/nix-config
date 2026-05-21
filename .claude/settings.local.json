@@ -18,7 +18,9 @@
       "Bash(nix flake:*)",
       "Bash(nix build:*)",
       "Bash(./result/sw/bin/darwin-rebuild switch:*)",
-      "Bash(sudo ./result/sw/bin/darwin-rebuild switch --flake .)"
+      "Bash(sudo ./result/sw/bin/darwin-rebuild switch --flake .)",
+      "Bash(tree-sitter *)",
+      "Bash(nix-env -q)"
     ]
   }
 }
