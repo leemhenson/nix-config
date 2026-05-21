@@ -7,16 +7,14 @@
   };
 
   brews = [
-    "applesimutils"
-    "delta"
+    "delta" # Syntax-highlighting pager for git and diff output
     "docker"
     "gh"
     "gnu-sed"
-    "hl"
-    "mobile-dev-inc/tap/maestro"
+    "hl" # https://github.com/pamburus/hl
     "neovim"
     "pulumi"
-    "unison-language"
+    "starship"
   ];
 
   casks = [
@@ -26,18 +24,13 @@
     "font-monaspace"
     "ghostty"
     "google-cloud-sdk"
-    "iterm2"
     "ngrok"
-    "react-native-debugger"
     "visual-studio-code"
   ];
 
   taps = [
     "homebrew/cask-fonts"
-    "mobile-dev-inc/tap"
-    "pamburus/tap"
+    "pamburus/tap" # hl
     "pulumi/tap"
-    "unisonweb/unison"
-    "wix/brew"
   ];
 }
