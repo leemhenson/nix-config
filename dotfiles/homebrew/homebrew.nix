@@ -14,7 +14,6 @@
     "hl" # https://github.com/pamburus/hl
     "neovim"
     "pulumi"
-    "starship"
   ];
 
   casks = [

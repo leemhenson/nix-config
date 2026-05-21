@@ -270,6 +270,20 @@ require("blink.cmp").setup({
 		preset = "default",
 		["<Up>"] = { "select_prev", "fallback" },
 		["<Down>"] = { "select_next", "fallback" },
+		["<Tab>"] = { "select_next", "fallback" },
+		["<S-Tab>"] = { "select_prev", "fallback" },
+		-- Accept with CR while letting mini.pairs handle it when menu is closed
+		["<CR>"] = {
+			function(cmp)
+				if cmp.is_visible() then
+					return cmp.accept()
+				end
+			end,
+			function()
+				return MiniPairs.cr()
+			end,
+			"fallback",
+		},
 	},
 	fuzzy = { implementation = "lua" }, -- no prebuilt Rust binary needed; pure-Lua fallback
 	completion = {

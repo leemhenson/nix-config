@@ -18,7 +18,7 @@ pkgs: {
     enable = true;
     extraConfig = builtins.readFile ./oh-my-zsh-extra.zsh;
     plugins = [ "1password" "colored-man-pages" "git" "httpie" "z" ];
-    theme = "flazz";
+    theme = "";
   };
 
   plugins = [

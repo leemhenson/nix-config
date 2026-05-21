@@ -80,6 +80,7 @@
           configFile."helix/config.toml".source = ../../dotfiles/helix/config.toml;
           configFile."nix/nix.conf".source = ../../dotfiles/nix/nix.conf;
           configFile."nvim/init.lua".source = ../../dotfiles/nvim/init.lua;
+          configFile."starship.toml".source = ../../dotfiles/starship/starship.toml;
           configFile."vscode/wrapper/code".source = ../../dotfiles/vscode/wrapper/code;
           configFile."vscode-insiders/wrapper/code-insiders".source =
             ../../dotfiles/vscode-insiders/wrapper/code;
@@ -153,6 +154,7 @@
           htop.enable = true;
           man.enable = true;
           ssh = import ../../dotfiles/ssh/ssh.nix;
+          starship.enable = true;
           zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
         };
       };
