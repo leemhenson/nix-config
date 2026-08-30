@@ -140,7 +140,13 @@ vim.lsp.config("lua_ls", {
 	},
 })
 
-vim.lsp.enable({ "ts_ls", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls" })
+vim.lsp.config("gleam", {
+	cmd = { "gleam", "lsp" },
+	filetypes = { "gleam" },
+	root_markers = { "gleam.toml", ".git" },
+})
+
+vim.lsp.enable({ "ts_ls", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam" })
 
 -- =============================================================================
 -- Keymaps
@@ -217,7 +223,10 @@ map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location lis
 -- LSP keymaps — only active when an LSP is attached to the buffer
 vim.api.nvim_create_autocmd("CursorHold", {
 	callback = function()
-		vim.diagnostic.open_float(nil, { focus = false })
+		-- only open the float if there's at least one diagnostic on the line
+		if #vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 }) > 0 then
+			vim.diagnostic.open_float(nil, { focus = false })
+		end
 	end,
 })
 

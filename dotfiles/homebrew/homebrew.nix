@@ -9,11 +9,13 @@
   brews = [
     "delta" # Syntax-highlighting pager for git and diff output
     "docker"
+    "erlang"
     "gh"
+    "gleam"
     "gnu-sed"
     "hl" # https://github.com/pamburus/hl
     "neovim"
-    "pulumi"
+    "ollama"
   ];
 
   casks = [
@@ -28,8 +30,6 @@
   ];
 
   taps = [
-    "homebrew/cask-fonts"
     "pamburus/tap" # hl
-    "pulumi/tap"
   ];
 }
