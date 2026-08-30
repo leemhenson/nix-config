@@ -50,7 +50,7 @@ local plugins = {
 	"https://github.com/nvim-lua/plenary.nvim", -- required by telescope + neogit
 	"https://github.com/nvim-telescope/telescope.nvim",
 	"https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- compiled fzf sorter for telescope
-	"https://github.com/Saghen/blink.cmp", -- completion (fetches prebuilt Rust binary on first run)
+	{ src = "https://github.com/Saghen/blink.cmp", version = "v1" }, -- completion (fetches prebuilt Rust binary on first run)
 	"https://github.com/stevearc/oil.nvim", -- edit filesystem as a buffer
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/lewis6991/gitsigns.nvim", -- gutter signs + hunk operations
@@ -70,7 +70,8 @@ local plugins = {
 
 -- vim.pack stores plugins in pack/core/opt/ — packadd each one so require() calls below work
 vim.pack.add(plugins)
-for _, url in ipairs(plugins) do
+for _, plugin in ipairs(plugins) do
+	local url = type(plugin) == "table" and plugin.src or plugin
 	vim.cmd("packadd " .. url:match("([^/]+)$"))
 end
 
@@ -288,13 +289,9 @@ require("blink.cmp").setup({
 					return cmp.accept()
 				end
 			end,
-			function()
-				return MiniPairs.cr()
-			end,
 			"fallback",
 		},
 	},
-	fuzzy = { implementation = "lua" }, -- no prebuilt Rust binary needed; pure-Lua fallback
 	completion = {
 		menu = { border = "rounded" },
 		documentation = { window = { border = "rounded" } },
