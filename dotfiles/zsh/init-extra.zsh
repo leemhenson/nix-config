@@ -47,3 +47,8 @@ if [ -f $HOME/Documents/dotfiles/private.zsh ]; then
 fi
 
 EDITOR=nvim
+
+# Disable zsh-vi-mode inside Neovim terminal (use emacs keybindings instead)
+if [ -n "$NVIM" ]; then
+  bindkey -e
+fi

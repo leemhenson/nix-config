@@ -45,27 +45,29 @@ vim.api.nvim_create_autocmd("PackChanged", {
 })
 
 local plugins = {
-	"https://github.com/Aejkatappaja/sora",
-	"https://github.com/WTFox/jellybeans.nvim",
-	"https://github.com/nvim-lua/plenary.nvim", -- required by telescope + neogit
-	"https://github.com/nvim-telescope/telescope.nvim",
-	"https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- compiled fzf sorter for telescope
-	{ src = "https://github.com/Saghen/blink.cmp", version = "v1" }, -- completion (fetches prebuilt Rust binary on first run)
-	"https://github.com/stevearc/oil.nvim", -- edit filesystem as a buffer
+	"https://github.com/AlexvZyl/nordic.nvim",
 	"https://github.com/NeogitOrg/neogit",
-	"https://github.com/lewis6991/gitsigns.nvim", -- gutter signs + hunk operations
+	"https://github.com/WTFox/jellybeans.nvim",
+	"https://github.com/akinsho/bufferline.nvim",
 	"https://github.com/echasnovski/mini.nvim", -- using mini.statusline only
-	"https://github.com/nvim-treesitter/nvim-treesitter",
-	"https://github.com/folke/which-key.nvim",
 	"https://github.com/folke/flash.nvim",
+	"https://github.com/folke/persistence.nvim",
+	"https://github.com/folke/todo-comments.nvim",
+	"https://github.com/folke/tokyonight.nvim",
 	"https://github.com/folke/trouble.nvim",
 	"https://github.com/folke/ts-comments.nvim",
-	"https://github.com/folke/todo-comments.nvim",
-	"https://github.com/stevearc/conform.nvim",
+	"https://github.com/folke/which-key.nvim",
+	"https://github.com/lewis6991/gitsigns.nvim", -- gutter signs + hunk operations
 	"https://github.com/mfussenegger/nvim-lint",
+	"https://github.com/nvim-lua/plenary.nvim", -- required by telescope + neogit
+	"https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- compiled fzf sorter for telescope
+	"https://github.com/nvim-telescope/telescope.nvim",
+	"https://github.com/nvim-treesitter/nvim-treesitter",
+	"https://github.com/rmehri01/onenord.nvim",
+	"https://github.com/stevearc/conform.nvim",
+	"https://github.com/stevearc/oil.nvim", -- edit filesystem as a buffer
 	"https://github.com/windwp/nvim-ts-autotag",
-	"https://github.com/akinsho/bufferline.nvim",
-	"https://github.com/folke/persistence.nvim",
+	{ src = "https://github.com/Saghen/blink.cmp", version = "v1" }, -- completion (fetches prebuilt Rust binary on first run)
 }
 
 -- vim.pack stores plugins in pack/core/opt/ — packadd each one so require() calls below work
@@ -170,9 +172,6 @@ map("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Todo comments" })
 map({ "n", "x", "o" }, "s", function()
 	require("flash").jump()
 end, { desc = "Flash jump" })
-map({ "n", "x", "o" }, "S", function()
-	require("flash").treesitter()
-end, { desc = "Flash treesitter" })
 
 -- Oil
 map("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
@@ -220,6 +219,8 @@ map(
 )
 map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix list (Trouble)" })
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location list (Trouble)" })
+
+map("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit terminal mode" })
 
 -- LSP keymaps — only active when an LSP is attached to the buffer
 vim.api.nvim_create_autocmd("CursorHold", {
@@ -271,9 +272,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- =============================================================================
 
 -- Colorscheme
-require("sora").setup()
 require("jellybeans").setup({})
-vim.cmd("colorscheme jellybeans")
+require("nordic").setup({})
+require("onenord").setup({})
+require("tokyonight").setup({})
+
+vim.cmd("colorscheme tokyonight")
 
 -- Treesitter
 -- nvim-treesitter v1.x removed the configs module; highlighting is via built-in vim.treesitter.
