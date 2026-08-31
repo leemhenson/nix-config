@@ -224,8 +224,22 @@ map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location lis
 -- LSP keymaps — only active when an LSP is attached to the buffer
 vim.api.nvim_create_autocmd("CursorHold", {
 	callback = function()
-		-- only open the float if there's at least one diagnostic on the line
-		if #vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 }) > 0 then
+		-- ui2 filetypes to ignore (cmdline, message, dialog, pager windows)
+		local ui2_filetypes = { cmd = true, msg = true, dialog = true, pager = true }
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			local config = vim.api.nvim_win_get_config(win)
+			if config.relative ~= "" then
+				local buf = vim.api.nvim_win_get_buf(win)
+				local ft = vim.bo[buf].filetype
+				if not ui2_filetypes[ft] then
+					-- A non-ui2 floating window (hover, telescope, etc.) is open
+					return
+				end
+			end
+		end
+		-- Only show diagnostics if there are actually diagnostics on this line
+		local lnum = vim.fn.line(".") - 1
+		if #vim.diagnostic.get(0, { lnum = lnum }) > 0 then
 			vim.diagnostic.open_float(nil, { focus = false })
 		end
 	end,
