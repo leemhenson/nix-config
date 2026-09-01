@@ -52,6 +52,7 @@ local plugins = {
 	"https://github.com/echasnovski/mini.nvim", -- using mini.statusline only
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/folke/persistence.nvim",
+	"https://github.com/folke/snacks.nvim",
 	"https://github.com/folke/todo-comments.nvim",
 	"https://github.com/folke/tokyonight.nvim",
 	"https://github.com/folke/trouble.nvim",
@@ -314,6 +315,9 @@ require("blink.cmp").setup({
 		menu = { border = "rounded" },
 		documentation = { window = { border = "rounded" } },
 	},
+	signature = {
+		enabled = true,
+	},
 })
 
 -- Telescope + fzf-native
@@ -452,5 +456,12 @@ require("flash").setup({
 		search = {
 			enabled = true,
 		},
+	},
+})
+
+-- snacks.nvim
+require("snacks").setup({
+	picker = {
+		ui_select = true,
 	},
 })
