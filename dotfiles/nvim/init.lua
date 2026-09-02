@@ -26,6 +26,8 @@ require("vim._core.ui2").enable({})
 vim.o.winborder = "rounded" -- bordered floats for LSP hover, diagnostics, etc.
 vim.diagnostic.config({ float = { border = "rounded" } })
 
+local map = vim.keymap.set
+
 -- =============================================================================
 -- Plugins
 -- =============================================================================
@@ -46,10 +48,11 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
 local plugins = {
 	"https://github.com/AlexvZyl/nordic.nvim",
+	-- "https://github.com/Antony-AXS/indicator.nvim",
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/WTFox/jellybeans.nvim",
-	"https://github.com/akinsho/bufferline.nvim",
-	"https://github.com/echasnovski/mini.nvim", -- using mini.statusline only
+	-- "https://github.com/akinsho/bufferline.nvim",
+	"https://github.com/echasnovski/mini.nvim",
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/folke/persistence.nvim",
 	"https://github.com/folke/snacks.nvim",
@@ -58,11 +61,15 @@ local plugins = {
 	"https://github.com/folke/trouble.nvim",
 	"https://github.com/folke/ts-comments.nvim",
 	"https://github.com/folke/which-key.nvim",
+	"https://github.com/gigacrat/aperture.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim", -- gutter signs + hunk operations
 	"https://github.com/mfussenegger/nvim-lint",
+	"https://github.com/nicholascross/displace.nvim",
 	"https://github.com/nvim-lua/plenary.nvim", -- required by telescope + neogit
+	"https://github.com/nvim-lualine/lualine.nvim",
 	"https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- compiled fzf sorter for telescope
 	"https://github.com/nvim-telescope/telescope.nvim",
+	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/rmehri01/onenord.nvim",
 	"https://github.com/stevearc/conform.nvim",
@@ -151,122 +158,6 @@ vim.lsp.config("gleam", {
 })
 
 vim.lsp.enable({ "ts_ls", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam" })
-
--- =============================================================================
--- Keymaps
--- =============================================================================
-local map = vim.keymap.set
-local tel = require("telescope.builtin")
-
--- Telescope
-map("n", "<leader>ff", tel.find_files, { desc = "Find files" })
-map("n", "<leader>fg", tel.live_grep, { desc = "Live grep" })
-map("n", "<leader>fb", tel.buffers, { desc = "Buffers" })
-map("n", "<leader>fs", tel.lsp_document_symbols, { desc = "Document symbols" })
-map("n", "<leader>fS", tel.lsp_workspace_symbols, { desc = "Workspace symbols" })
-map("n", "<leader>fd", tel.diagnostics, { desc = "Diagnostics" })
-map("n", "<leader>fk", tel.keymaps, { desc = "Keymaps" })
-map("n", "<leader>fc", tel.commands, { desc = "Commands" })
-map("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Todo comments" })
-
--- Flash
-map({ "n", "x", "o" }, "s", function()
-	require("flash").jump()
-end, { desc = "Flash jump" })
-
--- Oil
-map("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
-
--- Windows
-map("n", "<leader>wv", "<C-w>v", { desc = "Split vertical" })
-map("n", "<leader>ws", "<C-w>s", { desc = "Split horizontal" })
-
--- Neogit
-map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit" })
-
--- Diagnostics
-map("n", "]d", function()
-	vim.diagnostic.jump({ count = 1 })
-end, { desc = "Next diagnostic" })
-map("n", "[d", function()
-	vim.diagnostic.jump({ count = -1 })
-end, { desc = "Prev diagnostic" })
-
--- Persistence
-map("n", "<leader>qs", function()
-	require("persistence").load()
-end, { desc = "Restore session" })
-map("n", "<leader>ql", function()
-	require("persistence").load({ last = true })
-end, { desc = "Restore last session" })
-map("n", "<leader>qd", function()
-	require("persistence").stop()
-end, { desc = "Don't save session" })
-
--- Bufferline
-map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete buffer" })
-
--- Trouble
-map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
-map("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer diagnostics (Trouble)" })
-map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
-map(
-	"n",
-	"<leader>xl",
-	"<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>",
-	{ desc = "LSP definitions/refs (Trouble)" }
-)
-map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix list (Trouble)" })
-map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location list (Trouble)" })
-
-map("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit terminal mode" })
-
--- LSP keymaps — only active when an LSP is attached to the buffer
-vim.api.nvim_create_autocmd("CursorHold", {
-	callback = function()
-		-- ui2 filetypes to ignore (cmdline, message, dialog, pager windows)
-		local ui2_filetypes = { cmd = true, msg = true, dialog = true, pager = true }
-		for _, win in ipairs(vim.api.nvim_list_wins()) do
-			local config = vim.api.nvim_win_get_config(win)
-			if config.relative ~= "" then
-				local buf = vim.api.nvim_win_get_buf(win)
-				local ft = vim.bo[buf].filetype
-				if not ui2_filetypes[ft] then
-					-- A non-ui2 floating window (hover, telescope, etc.) is open
-					return
-				end
-			end
-		end
-		-- Only show diagnostics if there are actually diagnostics on this line
-		local lnum = vim.fn.line(".") - 1
-		if #vim.diagnostic.get(0, { lnum = lnum }) > 0 then
-			vim.diagnostic.open_float(nil, { focus = false })
-		end
-	end,
-})
-
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(ev)
-		local opts = { buffer = ev.buf }
-		map("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-		map("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
-		map("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
-		map("n", "gr", tel.lsp_references, vim.tbl_extend("force", opts, { desc = "References" }))
-		map("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Hover docs" }))
-		map("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
-		map(
-			{ "n", "v" },
-			"<leader>ca",
-			vim.lsp.buf.code_action,
-			vim.tbl_extend("force", opts, { desc = "Code action" })
-		)
-		map("n", "<leader>cf", function()
-			require("conform").format({ async = true, lsp_fallback = true })
-		end, vim.tbl_extend("force", opts, { desc = "Format buffer" }))
-	end,
-})
 
 -- =============================================================================
 -- Plugin configuration
@@ -360,23 +251,8 @@ require("neogit").setup({})
 -- persistence.nvim — auto-saves and restores sessions per directory
 require("persistence").setup()
 
--- bufferline.nvim — buffer tabs; must be set up after the colorscheme
-require("bufferline").setup({
-	options = {
-		show_buffer_close_icons = false,
-		show_close_icon = false,
-	},
-})
-
--- mini.icons — replaces nvim-web-devicons; mock call keeps plugins that require it working
-require("mini.icons").setup()
-MiniIcons.mock_nvim_web_devicons()
-
 -- mini.pairs — auto-close brackets, quotes, etc.
 require("mini.pairs").setup()
-
--- mini.statusline
-require("mini.statusline").setup()
 
 -- which-key — shows popup of available keymaps after pressing a prefix
 require("which-key").setup()
@@ -460,8 +336,136 @@ require("flash").setup({
 })
 
 -- snacks.nvim
+-- shows a floating menu instead of bottom menu
 require("snacks").setup({
 	picker = {
 		ui_select = true,
 	},
+})
+
+-- aperture.nvim
+-- dims inactive windows
+require("aperture").setup({
+	autosize = {
+		enabled = false,
+	},
+})
+
+-- lualine
+require("lualine").setup({})
+
+-- displace
+-- provides jump-to-window
+require("displace").setup({})
+
+-- =============================================================================
+-- Keymaps
+-- =============================================================================
+local tel = require("telescope.builtin")
+
+-- Telescope
+map("n", "<leader>ff", tel.find_files, { desc = "Find files" })
+map("n", "<leader>fg", tel.live_grep, { desc = "Live grep" })
+map("n", "<leader>fb", tel.buffers, { desc = "Buffers" })
+map("n", "<leader>fs", tel.lsp_document_symbols, { desc = "Document symbols" })
+map("n", "<leader>fS", tel.lsp_workspace_symbols, { desc = "Workspace symbols" })
+map("n", "<leader>fd", tel.diagnostics, { desc = "Diagnostics" })
+map("n", "<leader>fk", tel.keymaps, { desc = "Keymaps" })
+map("n", "<leader>fc", tel.commands, { desc = "Commands" })
+map("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Todo comments" })
+
+-- Flash
+map({ "n", "x", "o" }, "s", require("flash").jump, { desc = "Flash jump" })
+
+-- Oil
+map("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
+
+-- Windows
+map("n", "<leader>wh", "<C-w>s", { desc = "Split horizontal" })
+map("n", "<leader>wv", "<C-w>v", { desc = "Split vertical" })
+map("n", "<leader>j", require("displace.navigator").show_window_numbers, { desc = "Jump to window", silent = true })
+
+-- Neogit
+map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit" })
+
+-- Diagnostics
+map("n", "]d", function()
+	vim.diagnostic.jump({ count = 1 })
+end, { desc = "Next diagnostic" })
+
+map("n", "[d", function()
+	vim.diagnostic.jump({ count = -1 })
+end, { desc = "Prev diagnostic" })
+
+-- Persistence
+map("n", "<leader>qs", require("persistence").load, { desc = "Restore session" })
+
+map("n", "<leader>ql", function()
+	require("persistence").load({ last = true })
+end, { desc = "Restore last session" })
+
+map("n", "<leader>qd", require("persistence").stop, { desc = "Don't save session" })
+
+-- Buffers
+map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete buffer" })
+
+-- Trouble
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
+map("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer diagnostics (Trouble)" })
+map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+map(
+	"n",
+	"<leader>xl",
+	"<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>",
+	{ desc = "LSP definitions/refs (Trouble)" }
+)
+map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix list (Trouble)" })
+map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location list (Trouble)" })
+
+-- Terminal
+map("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit terminal mode" })
+
+-- LSP keymaps — only active when an LSP is attached to the buffer
+vim.api.nvim_create_autocmd("CursorHold", {
+	callback = function()
+		-- ui2 filetypes to ignore (cmdline, message, dialog, pager windows)
+		local ui2_filetypes = { cmd = true, msg = true, dialog = true, pager = true }
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			local config = vim.api.nvim_win_get_config(win)
+			if config.relative ~= "" then
+				local buf = vim.api.nvim_win_get_buf(win)
+				local ft = vim.bo[buf].filetype
+				if not ui2_filetypes[ft] then
+					-- A non-ui2 floating window (hover, telescope, etc.) is open
+					return
+				end
+			end
+		end
+		-- Only show diagnostics if there are actually diagnostics on this line
+		local lnum = vim.fn.line(".") - 1
+		if #vim.diagnostic.get(0, { lnum = lnum }) > 0 then
+			vim.diagnostic.open_float(nil, { focus = false })
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(ev)
+		local opts = { buffer = ev.buf }
+		map("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
+		map("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
+		map("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
+		map("n", "gr", tel.lsp_references, vim.tbl_extend("force", opts, { desc = "References" }))
+		map("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Hover docs" }))
+		map("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
+		map(
+			{ "n", "v" },
+			"<leader>ca",
+			vim.lsp.buf.code_action,
+			vim.tbl_extend("force", opts, { desc = "Code action" })
+		)
+		map("n", "<leader>cf", function()
+			require("conform").format({ async = true, lsp_fallback = true })
+		end, vim.tbl_extend("force", opts, { desc = "Format buffer" }))
+	end,
 })
