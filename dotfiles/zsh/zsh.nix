@@ -65,7 +65,7 @@
     BAT_PAGER = "";
     CLICOLOR = "true";
     NPM_CONFIG_USERCONFIG = "$HOME/Documents/dotfiles/npmrc";
-    PATH = "./node_modules/.bin:$HOME/.config/vscode/wrapper:$HOME/.config/vscode-insiders/wrapper:$HOME/.local/bin:$HOME/.npm/global/bin:$PATH:/opt/homebrew/bin:$HOME/Library/Android/sdk/platform-tools";
+    PATH = "./node_modules/.bin:$HOME/.config/vscode/wrapper:$HOME/.config/vscode-insiders/wrapper:$HOME/.local/bin:$HOME/src/roc/zig-out/bin:$HOME/.npm/global/bin:$PATH:/opt/homebrew/bin:$HOME/Library/Android/sdk/platform-tools";
   };
 
   shellAliases = {
