@@ -11,11 +11,6 @@
   documentation.enable = false;
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "lima-full-1.2.2"
-    "lima-additional-guestagents-1.2.2"
-  ];
-
   system = {
     defaults = {
       NSGlobalDomain = {
@@ -69,7 +64,7 @@
     backupFileExtension = "backup";
 
     users.leemhenson =
-      { pkgs, ... }:
+      { pkgs, config, ... }:
       {
         fonts.fontconfig.enable = true;
 
@@ -118,11 +113,10 @@
             libwebp
             lsd
             lua-language-server # needed for lua language server in nvim
+            luaPackages.tree-sitter-cli
             nil # needed for nix language server in neovim
-            nixfmt-rfc-style # formatter for Nix
+            nixfmt # formatter for Nix
             nodejs-slim
-            nodePackages."@tailwindcss/language-server"
-            nodePackages.typescript-language-server
             openssh
             openssl
             pgcli
@@ -132,8 +126,10 @@
             serie
             sqlfluff # formatter/linter for SQL
             stylua # formatter for Lua
+            tailwindcss-language-server
             tldr
             tree-sitter # needed by nvim-treesitter to compile parsers
+            typescript-language-server
             unstablePkgs.helix
             vscode-langservers-extracted # provides vscode-eslint-language-server
             watchman
@@ -155,7 +151,7 @@
           man.enable = true;
           ssh = import ../../dotfiles/ssh/ssh.nix;
           starship.enable = true;
-          zsh = import ../../dotfiles/zsh/zsh.nix pkgs;
+          zsh = import ../../dotfiles/zsh/zsh.nix { inherit pkgs config; };
         };
       };
   };

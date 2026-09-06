@@ -2,45 +2,52 @@
   description = "My nix config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # nix will normally use the nixpkgs defined in home-managers inputs, we only want one copy of nixpkgs though
-    darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.11";
-    darwin.inputs.nixpkgs.follows = "nixpkgs"; # ...
+    darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   # add the inputs declared above to the argument attribute set
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin }: {
-    darwinConfigurations."Deimos" = darwin.lib.darwinSystem {
-      system = "x86_64-darwin";
-      modules = [
-        home-manager.darwinModules.home-manager
-        ./hosts/Deimos/default.nix
-      ];
-    };
-
-    darwinConfigurations."Europa" = darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      specialArgs = {
-        unstablePkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      darwin,
+    }:
+    {
+      darwinConfigurations."Deimos" = darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        modules = [
+          home-manager.darwinModules.home-manager
+          ./hosts/Deimos/default.nix
+        ];
       };
-      modules = [
-        home-manager.darwinModules.home-manager
-        ./hosts/Europa/default.nix
-      ];
-    };
 
-    darwinConfigurations."Phobos" = darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      specialArgs = {
-        unstablePkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+      darwinConfigurations."Europa" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {
+          unstablePkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+        };
+        modules = [
+          home-manager.darwinModules.home-manager
+          ./hosts/Europa/default.nix
+        ];
       };
-      modules = [
-        home-manager.darwinModules.home-manager
-        ./hosts/Phobos/default.nix
-      ];
+
+      darwinConfigurations."Phobos" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {
+          unstablePkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+        };
+        modules = [
+          home-manager.darwinModules.home-manager
+          ./hosts/Phobos/default.nix
+        ];
+      };
     };
-  };
 }

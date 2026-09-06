@@ -1,7 +1,8 @@
-pkgs: {
+{ pkgs, config, ... }: {
   enable = true;
 
   autosuggestion.enable = true;
+  dotDir = config.home.homeDirectory;
   syntaxHighlighting.enable = true;
 
   history = {
@@ -17,7 +18,13 @@ pkgs: {
   oh-my-zsh = {
     enable = true;
     extraConfig = builtins.readFile ./oh-my-zsh-extra.zsh;
-    plugins = [ "1password" "colored-man-pages" "git" "httpie" "z" ];
+    plugins = [
+      "1password"
+      "colored-man-pages"
+      "git"
+      "httpie"
+      "z"
+    ];
     theme = "";
   };
 

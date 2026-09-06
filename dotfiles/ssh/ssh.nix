@@ -2,7 +2,7 @@
   enable = true;
   enableDefaultConfig = false;
 
-  matchBlocks = {
+  settings = {
     "github.com" = {
       addKeysToAgent = "yes";
       identityFile = "~/.ssh/github";

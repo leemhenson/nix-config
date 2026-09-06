@@ -27,6 +27,30 @@ vim.o.winborder = "rounded" -- bordered floats for LSP hover, diagnostics, etc.
 vim.diagnostic.config({ float = { border = "rounded" } })
 
 local map = vim.keymap.set
+local augroup = vim.api.nvim_create_augroup
+
+local function keymap(mode, lhs, rhs, desc, opts)
+	opts = opts or {}
+	opts.desc = desc
+	map(mode, lhs, rhs, opts)
+end
+
+local function nmap(lhs, rhs, desc, opts)
+	keymap("n", lhs, rhs, desc, opts)
+end
+
+local function leader(lhs, rhs, desc, opts)
+	nmap("<leader>" .. lhs, rhs, desc, opts)
+end
+
+local groups = {
+	pack = augroup("UserPack", { clear = true }),
+	treesitter = augroup("UserTreesitter", { clear = true }),
+	lint = augroup("UserLint", { clear = true }),
+	autotag = augroup("UserAutotag", { clear = true }),
+	diagnostics = augroup("UserDiagnostics", { clear = true }),
+	lsp = augroup("UserLsp", { clear = true }),
+}
 
 -- =============================================================================
 -- Plugins
@@ -34,6 +58,7 @@ local map = vim.keymap.set
 
 -- Build hooks must be registered before vim.pack.add so they fire on install
 vim.api.nvim_create_autocmd("PackChanged", {
+	group = groups.pack,
 	callback = function(ev)
 		if ev.data.kind ~= "install" and ev.data.kind ~= "update" then
 			return
@@ -48,10 +73,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
 local plugins = {
 	"https://github.com/AlexvZyl/nordic.nvim",
-	-- "https://github.com/Antony-AXS/indicator.nvim",
 	"https://github.com/NeogitOrg/neogit",
+	"https://github.com/Saghen/blink.cmp",
+	"https://github.com/Saghen/blink.lib",
 	"https://github.com/WTFox/jellybeans.nvim",
-	-- "https://github.com/akinsho/bufferline.nvim",
 	"https://github.com/echasnovski/mini.nvim",
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/folke/persistence.nvim",
@@ -75,7 +100,6 @@ local plugins = {
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/stevearc/oil.nvim", -- edit filesystem as a buffer
 	"https://github.com/windwp/nvim-ts-autotag",
-	{ src = "https://github.com/Saghen/blink.cmp", version = "v1" }, -- completion (fetches prebuilt Rust binary on first run)
 }
 
 -- vim.pack stores plugins in pack/core/opt/ — packadd each one so require() calls below work
@@ -89,25 +113,96 @@ end
 -- LSP
 -- =============================================================================
 
-vim.lsp.config("ts_ls", {
-	cmd = { "typescript-language-server", "--stdio" },
+local js_workspace_markers = {
+	"pnpm-workspace.yaml",
+	"pnpm-lock.yaml",
+	"yarn.lock",
+	"package-lock.json",
+	"bun.lock",
+	"bun.lockb",
+	"turbo.json",
+	"nx.json",
+	"rush.json",
+	"lerna.json",
+}
+
+local typescript_bin_cache = {}
+
+local function typescript_supports_lsp(bin)
+	if vim.fn.executable(bin) ~= 1 then
+		return false
+	end
+
+	local out = vim.system({ bin, "--version" }, { text = true }):wait()
+	local version = vim.version.parse(out.stdout or "")
+	return out.code == 0 and version ~= nil and version.major >= 7
+end
+
+vim.lsp.config("tsc", {
+	cmd = function(dispatchers, config)
+		local cmd = typescript_bin_cache[(config or {}).root_dir] or "tsc"
+		return vim.lsp.rpc.start({ cmd, "--lsp", "--stdio" }, dispatchers)
+	end,
 	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+	root_dir = function(bufnr, on_dir)
+		local root_markers = vim.deepcopy(js_workspace_markers)
+		root_markers = vim.fn.has("nvim-0.11.3") == 1 and { root_markers, { ".git" } }
+			or vim.list_extend(root_markers, { ".git" })
+
+		local deno_root = vim.fs.root(bufnr, { "deno.json", "deno.jsonc" })
+		local deno_lock_root = vim.fs.root(bufnr, { "deno.lock" })
+		local project_root = vim.fs.root(bufnr, root_markers)
+		if deno_lock_root and (not project_root or #deno_lock_root > #project_root) then
+			return
+		end
+		if deno_root and (not project_root or #deno_root >= #project_root) then
+			return
+		end
+
+		local root = project_root or vim.fn.getcwd()
+		if typescript_bin_cache[root] then
+			return on_dir(root)
+		end
+
+		for _, bin in ipairs({
+			vim.fs.joinpath(root, "node_modules/.bin/tsc"),
+			vim.fs.joinpath(root, "node_modules/.bin/tsgo"),
+			"tsc",
+			"tsgo",
+		}) do
+			if typescript_supports_lsp(bin) then
+				typescript_bin_cache[root] = bin
+				return on_dir(root)
+			end
+		end
+
+		vim.notify("tsc: no binary supporting `--lsp` found (requires TypeScript 7.0+)", vim.log.levels.WARN)
+	end,
+	settings = {
+		["js/ts"] = {
+			inlayHints = {
+				parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
+				parameterTypes = { enabled = true },
+				variableTypes = { enabled = true },
+				propertyDeclarationTypes = { enabled = true },
+				functionLikeReturnTypes = { enabled = true },
+				enumMemberValues = { enabled = true },
+			},
+		},
+	},
 })
 
 vim.lsp.config("eslint", {
 	cmd = { "vscode-eslint-language-server", "--stdio" },
 	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-	root_markers = {
+	root_markers = vim.list_extend({
 		".eslintrc",
 		".eslintrc.js",
 		".eslintrc.json",
 		".eslintrc.cjs",
 		"eslint.config.js",
 		"eslint.config.mjs",
-		"package.json",
-		".git",
-	},
+	}, vim.list_extend(vim.deepcopy(js_workspace_markers), { "package.json", ".git" })),
 	settings = {
 		workingDirectory = { mode = "location" },
 	},
@@ -121,7 +216,10 @@ vim.lsp.config("eslint", {
 vim.lsp.config("tailwindcss", {
 	cmd = { "tailwindcss-language-server", "--stdio" },
 	filetypes = { "typescriptreact", "javascriptreact", "html", "css" },
-	root_markers = { "tailwind.config.js", "tailwind.config.ts", "package.json", ".git" },
+	root_markers = vim.list_extend(
+		{ "tailwind.config.js", "tailwind.config.ts" },
+		vim.list_extend(vim.deepcopy(js_workspace_markers), { "package.json", ".git" })
+	),
 })
 
 vim.lsp.config("sqls", {
@@ -157,7 +255,36 @@ vim.lsp.config("gleam", {
 	root_markers = { "gleam.toml", ".git" },
 })
 
-vim.lsp.enable({ "ts_ls", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam" })
+vim.lsp.config("roc_ls", {
+	cmd = { "roc_ls" },
+	filetypes = { "roc" },
+	root_markers = { ".git" },
+})
+
+vim.lsp.enable({ "tsc", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam", "roc_ls" })
+
+vim.api.nvim_create_user_command("UserLspClients", function()
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+	if #clients == 0 then
+		print("No LSP clients attached to current buffer")
+		return
+	end
+
+	for _, client in ipairs(clients) do
+		local cmd = type(client.config.cmd) == "table" and table.concat(client.config.cmd, " ") or "<function>"
+		print(("%s | root: %s | cmd: %s"):format(client.name, client.config.root_dir or "(none)", cmd))
+	end
+end, { desc = "Show LSP clients attached to the current buffer" })
+
+vim.api.nvim_create_user_command("UserConfigReload", function()
+	local config_path = vim.env.MYVIMRC or vim.fs.joinpath(vim.fn.stdpath("config"), "init.lua")
+	local ok, err = pcall(dofile, config_path)
+	if ok then
+		print("Reloaded " .. config_path)
+	else
+		vim.notify("Config reload failed: " .. err, vim.log.levels.ERROR)
+	end
+end, { desc = "Reload Neovim config" })
 
 -- =============================================================================
 -- Plugin configuration
@@ -173,16 +300,21 @@ vim.cmd("colorscheme tokyonight")
 
 -- Treesitter
 -- nvim-treesitter v1.x removed the configs module; highlighting is via built-in vim.treesitter.
--- Install parsers once with :TSInstall typescript tsx javascript css html sql lua nix
+-- Install parsers once with :TSInstall typescript tsx javascript css html sql lua nix roc
 vim.api.nvim_create_autocmd("FileType", {
+	group = groups.treesitter,
 	pattern = "*",
 	callback = function(ev)
 		pcall(vim.treesitter.start, ev.buf) -- pcall: silently skip if parser not yet installed
 	end,
 })
 
+vim.filetype.add({ extension = { roc = "roc" } })
+
 -- blink.cmp — LSP, path, buffer sources only; snippets excluded
-require("blink.cmp").setup({
+local cmp = require("blink.cmp")
+-- cmp.build():pwait()
+cmp.setup({
 	sources = {
 		default = { "lsp", "path", "buffer" },
 	},
@@ -255,7 +387,19 @@ require("persistence").setup()
 require("mini.pairs").setup()
 
 -- which-key — shows popup of available keymaps after pressing a prefix
-require("which-key").setup()
+local wk = require("which-key")
+wk.setup()
+wk.add({
+	{ "<leader>b", group = "Buffer" },
+	{ "<leader>f", group = "Find" },
+	{ "<leader>g", group = "Git" },
+	{ "<leader>h", group = "Git hunk" },
+	{ "<leader>j", group = "Jump" },
+	{ "<leader>l", group = "LSP" },
+	{ "<leader>s", group = "Session" },
+	{ "<leader>w", group = "Window" },
+	{ "<leader>x", group = "Trouble" },
+})
 
 -- trouble.nvim — pretty list for diagnostics, references, quickfix, location list
 require("trouble").setup()
@@ -265,11 +409,13 @@ local lint = require("lint")
 lint.linters_by_ft = { sql = { "sqlfluff" } }
 lint.linters.sqlfluff.args = { "lint", "--format", "json", "--dialect", "postgres" }
 vim.api.nvim_create_autocmd("BufWritePost", {
+	group = groups.lint,
 	callback = function()
 		lint.try_lint()
 	end,
 })
 vim.api.nvim_create_autocmd("BufReadPost", {
+	group = groups.lint,
 	callback = function()
 		lint.try_lint()
 	end,
@@ -314,6 +460,7 @@ require("nvim-ts-autotag").setup()
 -- vim.schedule defers until after all FileType handlers run, so we clear the
 -- InsertLeave autocmd nvim-ts-autotag already registered for that buffer.
 vim.api.nvim_create_autocmd("FileType", {
+	group = groups.autotag,
 	pattern = { "pager", "help", "qf", "nofile" },
 	callback = function(ev)
 		vim.schedule(function()
@@ -364,69 +511,69 @@ require("displace").setup({})
 local tel = require("telescope.builtin")
 
 -- Telescope
-map("n", "<leader>ff", tel.find_files, { desc = "Find files" })
-map("n", "<leader>fg", tel.live_grep, { desc = "Live grep" })
-map("n", "<leader>fb", tel.buffers, { desc = "Buffers" })
-map("n", "<leader>fs", tel.lsp_document_symbols, { desc = "Document symbols" })
-map("n", "<leader>fS", tel.lsp_workspace_symbols, { desc = "Workspace symbols" })
-map("n", "<leader>fd", tel.diagnostics, { desc = "Diagnostics" })
-map("n", "<leader>fk", tel.keymaps, { desc = "Keymaps" })
-map("n", "<leader>fc", tel.commands, { desc = "Commands" })
-map("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Todo comments" })
+leader("ff", tel.find_files, "Find files")
+leader("fg", tel.live_grep, "Live grep")
+leader("fb", tel.buffers, "Buffers")
+leader("fs", tel.lsp_document_symbols, "Document symbols")
+leader("fS", tel.lsp_workspace_symbols, "Workspace symbols")
+leader("fd", tel.diagnostics, "Diagnostics")
+leader("fk", tel.keymaps, "Keymaps")
+leader("fc", tel.commands, "Commands")
+leader("ft", "<cmd>TodoTelescope<cr>", "Todo comments")
 
 -- Flash
-map({ "n", "x", "o" }, "s", require("flash").jump, { desc = "Flash jump" })
+keymap({ "n", "x", "o" }, "s", require("flash").jump, "Flash jump")
 
 -- Oil
-map("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
+nmap("-", "<cmd>Oil<cr>", "Open parent directory")
 
 -- Windows
-map("n", "<leader>wh", "<C-w>s", { desc = "Split horizontal" })
-map("n", "<leader>wv", "<C-w>v", { desc = "Split vertical" })
-map("n", "<leader>j", require("displace.navigator").show_window_numbers, { desc = "Jump to window", silent = true })
+leader("wh", "<C-w>s", "Split horizontal (<C-w>s)")
+leader("wv", "<C-w>v", "Split vertical (<C-w>v)")
+
+-- Jumps
+leader("jb", "<C-o>", "Jump back (<C-o>)")
+leader("jf", "<C-i>", "Jump forward (<C-i>)")
+leader("jw", require("displace.navigator").show_window_numbers, "Jump to window")
 
 -- Neogit
-map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit" })
+leader("gg", "<cmd>Neogit<cr>", "Open Neogit")
 
 -- Diagnostics
-map("n", "]d", function()
+nmap("]d", function()
 	vim.diagnostic.jump({ count = 1 })
-end, { desc = "Next diagnostic" })
+end, "Next diagnostic")
 
-map("n", "[d", function()
+nmap("[d", function()
 	vim.diagnostic.jump({ count = -1 })
-end, { desc = "Prev diagnostic" })
+end, "Prev diagnostic")
 
 -- Persistence
-map("n", "<leader>qs", require("persistence").load, { desc = "Restore session" })
+leader("ss", require("persistence").load, "Restore session")
 
-map("n", "<leader>ql", function()
+leader("sl", function()
 	require("persistence").load({ last = true })
-end, { desc = "Restore last session" })
+end, "Restore last session")
 
-map("n", "<leader>qd", require("persistence").stop, { desc = "Don't save session" })
+leader("sd", require("persistence").stop, "Don't save session")
 
 -- Buffers
-map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete buffer" })
+leader("bd", "<cmd>bdelete<cr>", "Delete buffer")
 
 -- Trouble
-map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
-map("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer diagnostics (Trouble)" })
-map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
-map(
-	"n",
-	"<leader>xl",
-	"<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>",
-	{ desc = "LSP definitions/refs (Trouble)" }
-)
-map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix list (Trouble)" })
-map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location list (Trouble)" })
+leader("xx", "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics (Trouble)")
+leader("xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer diagnostics (Trouble)")
+leader("xs", "<cmd>Trouble symbols toggle focus=false<cr>", "Symbols (Trouble)")
+leader("xl", "<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>", "LSP definitions/refs (Trouble)")
+leader("xq", "<cmd>Trouble qflist toggle<cr>", "Quickfix list (Trouble)")
+leader("xL", "<cmd>Trouble loclist toggle<cr>", "Location list (Trouble)")
 
 -- Terminal
-map("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit terminal mode" })
+keymap("t", "<Esc>", "<C-\\><C-N>", "Exit terminal mode")
 
 -- LSP keymaps — only active when an LSP is attached to the buffer
 vim.api.nvim_create_autocmd("CursorHold", {
+	group = groups.diagnostics,
 	callback = function()
 		-- ui2 filetypes to ignore (cmdline, message, dialog, pager windows)
 		local ui2_filetypes = { cmd = true, msg = true, dialog = true, pager = true }
@@ -450,22 +597,30 @@ vim.api.nvim_create_autocmd("CursorHold", {
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
+	group = groups.lsp,
 	callback = function(ev)
 		local opts = { buffer = ev.buf }
-		map("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-		map("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
-		map("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
-		map("n", "gr", tel.lsp_references, vim.tbl_extend("force", opts, { desc = "References" }))
-		map("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Hover docs" }))
-		map("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
-		map(
-			{ "n", "v" },
-			"<leader>ca",
-			vim.lsp.buf.code_action,
-			vim.tbl_extend("force", opts, { desc = "Code action" })
-		)
-		map("n", "<leader>cf", function()
+		local function lsp_map(mode, lhs, rhs, desc)
+			map(mode, lhs, rhs, vim.tbl_extend("force", opts, { desc = desc }))
+		end
+
+		-- Muscle-memory LSP bindings.
+		lsp_map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+		lsp_map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+		lsp_map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+		lsp_map("n", "gr", tel.lsp_references, "References")
+		lsp_map("n", "K", vim.lsp.buf.hover, "Hover docs")
+
+		-- Which-key discoverable LSP actions.
+		lsp_map("n", "<leader>ld", vim.lsp.buf.definition, "Definition (gd)")
+		lsp_map("n", "<leader>lD", vim.lsp.buf.declaration, "Declaration (gD)")
+		lsp_map("n", "<leader>li", vim.lsp.buf.implementation, "Implementation (gi)")
+		lsp_map("n", "<leader>lr", tel.lsp_references, "References (gr)")
+		lsp_map("n", "<leader>lh", vim.lsp.buf.hover, "Hover docs (K)")
+		lsp_map("n", "<leader>ln", vim.lsp.buf.rename, "Rename symbol")
+		lsp_map({ "n", "v" }, "<leader>la", vim.lsp.buf.code_action, "Code action")
+		lsp_map("n", "<leader>lf", function()
 			require("conform").format({ async = true, lsp_fallback = true })
-		end, vim.tbl_extend("force", opts, { desc = "Format buffer" }))
+		end, "Format buffer")
 	end,
 })
