@@ -255,13 +255,14 @@ vim.lsp.config("gleam", {
 	root_markers = { "gleam.toml", ".git" },
 })
 
-vim.lsp.config("roc_ls", {
-	cmd = { "roc_ls" },
+vim.lsp.config("roc_lsp", {
+	cmd = { "roc", "experimental-lsp", "--debug-transport" },
 	filetypes = { "roc" },
-	root_markers = { ".git" },
+	root_markers = { "main.roc", "app.roc", ".git" },
+	single_file_support = true,
 })
 
-vim.lsp.enable({ "tsc", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam", "roc_ls" })
+vim.lsp.enable({ "tsc", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam", "roc_lsp" })
 
 vim.api.nvim_create_user_command("UserLspClients", function()
 	local clients = vim.lsp.get_clients({ bufnr = 0 })
