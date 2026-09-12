@@ -136,6 +136,7 @@
             wget
             yarn
             zig
+            zls
           ];
 
           stateVersion = "22.05";
