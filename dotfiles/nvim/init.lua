@@ -262,7 +262,9 @@ vim.lsp.config("roc_lsp", {
 	single_file_support = true,
 })
 
-vim.lsp.enable({ "tsc", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam", "roc_lsp" })
+vim.lsp.config("zls", {})
+
+vim.lsp.enable({ "tsc", "eslint", "tailwindcss", "sqls", "nil_ls", "lua_ls", "gleam", "roc_lsp", "zls" })
 
 vim.api.nvim_create_user_command("UserLspClients", function()
 	local clients = vim.lsp.get_clients({ bufnr = 0 })
@@ -398,8 +400,8 @@ wk.add({
 	{ "<leader>j", group = "Jump" },
 	{ "<leader>l", group = "LSP" },
 	{ "<leader>s", group = "Session" },
-	{ "<leader>w", group = "Window" },
 	{ "<leader>x", group = "Trouble" },
+	{ "<C-w>", group = "Window" },
 })
 
 -- trouble.nvim — pretty list for diagnostics, references, quickfix, location list
@@ -522,9 +524,6 @@ leader("fk", tel.keymaps, "Keymaps")
 leader("fc", tel.commands, "Commands")
 leader("ft", "<cmd>TodoTelescope<cr>", "Todo comments")
 
--- Flash
-keymap({ "n", "x", "o" }, "s", require("flash").jump, "Flash jump")
-
 -- Oil
 nmap("-", "<cmd>Oil<cr>", "Open parent directory")
 
@@ -535,7 +534,7 @@ leader("wv", "<C-w>v", "Split vertical (<C-w>v)")
 -- Jumps
 leader("jb", "<C-o>", "Jump back (<C-o>)")
 leader("jf", "<C-i>", "Jump forward (<C-i>)")
-leader("jw", require("displace.navigator").show_window_numbers, "Jump to window")
+leader("<C-w>n", require("displace.navigator").show_window_numbers, "Jump to window")
 
 -- Neogit
 leader("gg", "<cmd>Neogit<cr>", "Open Neogit")
