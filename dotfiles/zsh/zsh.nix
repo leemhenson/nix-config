@@ -1,7 +1,7 @@
 { pkgs, config, ... }: {
   enable = true;
 
-  autosuggestion.enable = true;
+  autosuggestion.enable = false;
   dotDir = config.home.homeDirectory;
   syntaxHighlighting.enable = true;
 
@@ -57,6 +57,16 @@
         repo = "zsh-vi-mode";
         rev = "v0.8.5";
         sha256 = "EOYqHh0rcgoi26eopm6FTl81ehak5kXMmzNcnJDH8/E=";
+      };
+    }
+    {
+      file = "deja.plugin.zsh";
+      name = "deja";
+      src = pkgs.fetchFromGitHub {
+        owner = "Giammarco-Ferranti";
+        repo = "deja";
+        rev = "v0.4.2";
+        sha256 = "9AzqGDZLlv5BxpuuV3JUfJxW5a2ljZakVHnegQgdO+0=";
       };
     }
   ];

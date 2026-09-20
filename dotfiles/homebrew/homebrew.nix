@@ -7,6 +7,7 @@
   };
 
   brews = [
+    "Giammarco-Ferranti/deja/deja"
     "delta" # Syntax-highlighting pager for git and diff output
     "docker"
     "erlang"
